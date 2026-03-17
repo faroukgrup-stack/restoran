@@ -2,7 +2,7 @@
 <html lang="tr" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
     <title>İdeal İşgücü Maliyeti Hesaplayıcı | FAROUK GRUP</title>
 
     <!-- Fonts & Icons -->
@@ -16,7 +16,7 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- html2canvas ve jsPDF (PDF çıktısı için) -->
+    <!-- html2canvas ve jsPDF (PDF dışa aktarma için) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -633,8 +633,6 @@
 <div class="floating-shape shape-1"></div>
 <div class="floating-shape shape-2"></div>
 
-<!-- Navigasyon (isteğe bağlı) -->
-
 <!-- Hero -->
 <section class="hero-mini">
     <h2>💰 İdeal İşgücü Maliyeti Hesaplayıcı</h2>
@@ -741,7 +739,7 @@
     </div>
 </div>
 
-<!-- Footer -->
+<!-- Footer (standart) -->
 <footer>
     <div class="footer-container">
         <div class="footer-content">
@@ -770,6 +768,39 @@
         </div>
     </div>
 </footer>
+
+<!-- Hesap makinesi modalı (buton nav'da) -->
+<div id="calculatorModal" class="modal" style="display: none; position: fixed; z-index: 9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.5); backdrop-filter:blur(4px);">
+    <div class="modal-content" style="background:linear-gradient(145deg, #ffffff, #f5f5f5); margin:5% auto; padding:0; border:2px solid var(--gold); border-radius:30px; width:250px; box-shadow:0 20px 40px rgba(0,0,0,0.3); animation:slideIn 0.3s ease-out;">
+        <div class="modal-header" style="background:var(--gold-soft); border-bottom:2px solid var(--gold); padding:10px 15px; border-radius:28px 28px 0 0; display:flex; align-items:center; justify-content:space-between;">
+            <span class="close" style="color:#666; float:right; font-size:24px; font-weight:bold; cursor:pointer;">&times;</span>
+            <h2 style="margin:0; color:var(--dark); font-size:1.1rem; font-weight:900;"><i class="fas fa-calculator" style="color:var(--gold);"></i> Hesap Makinesi</h2>
+        </div>
+        <div class="modal-body" style="padding:15px;">
+            <input type="text" id="calcDisplay" class="calc-display" style="width:100%; height:45px; font-size:1.5rem; text-align:left; padding:0 10px; border:2px solid var(--gold-light); border-radius:20px; margin-bottom:15px; background:white; font-family:'Inter',monospace; direction:ltr;" readonly>
+            <div class="calc-buttons" style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px;">
+                <button class="calc-btn" style="background:white; border:2px solid var(--gold-light); border-radius:15px; padding:8px 0; font-size:1rem; font-weight:700; color:var(--dark); cursor:pointer;" onclick="handleCalculatorInput('9')">9</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('8')">8</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('7')">7</button>
+                <button class="calc-btn operator" style="background:var(--gold-soft); color:var(--gold); font-weight:900;" onclick="handleCalculatorInput('/')">÷</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('6')">6</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('5')">5</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('4')">4</button>
+                <button class="calc-btn operator" onclick="handleCalculatorInput('*')">×</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('3')">3</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('2')">2</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('1')">1</button>
+                <button class="calc-btn operator" onclick="handleCalculatorInput('-')">-</button>
+                <button class="calc-btn" onclick="clearCalculator()">C</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('.')">.</button>
+                <button class="calc-btn" onclick="handleCalculatorInput('0')">0</button>
+                <button class="calc-btn operator" onclick="handleCalculatorInput('+')">+</button>
+                <button class="calc-btn" onclick="backspaceCalculator()">⌫</button>
+                <button class="calc-btn equals" style="background:var(--gold); color:white; grid-column:span 2;" onclick="calculateCalculatorResult()">=</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- AOS -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -934,11 +965,11 @@
         let suggestions = '';
         if (laborPercent > idealMax) {
             suggestions += '<li>Sakin saatlerde çalışan sayısını azaltın (yoğunluk analizi yapın).</li>';
-            <li>Bazı görevleri birleştirin veya çok becerili personel kullanın.</li>';
-            <li>Oranı düşürmek için satışları artırın (pazarlama).</li>';
+            suggestions += '<li>Bazı görevleri birleştirin veya çok becerili personel kullanın.</li>';
+            suggestions += '<li>Oranı düşürmek için satışları artırın (pazarlama).</li>';
         } else if (laborPercent < idealMin) {
             suggestions += '<li>Müşterilere daha iyi hizmet vermek için personel sayısını artırmanız gerekebilir.</li>';
-            <li>Hedef satışların gerçekçi ve ulaşılabilir olduğundan emin olun.</li>';
+            suggestions += '<li>Hedef satışların gerçekçi ve ulaşılabilir olduğundan emin olun.</li>';
         } else {
             suggestions += '<li>Mevcut dağılım iyi. Performansı izlemeye devam edin.</li>';
         }
@@ -1210,6 +1241,7 @@
         }
     });
 
+    
     // İlk yükleme
     renderShifts();
 </script>
