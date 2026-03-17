@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>İleri Düzey Restoran Teknik Fizibilite Çalışması | FAROUK GRUP</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- html2canvas for Word export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #b8860b;
+            --gold-light: #d4b15a;
+            --gold-soft: rgba(184,134,11,0.1);
+            --dark: #0f0f0f;
+            --dark-light: #1a1a1a;
+            --white: #ffffff;
+            --offwhite: #f9f9f9;
+            --text: #333;
+            --card-bg: #fefcf6;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(184,134,11,0.03) 0px, transparent 20px),
+                radial-gradient(circle at 90% 70%, rgba(184,134,11,0.03) 0px, transparent 25px),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.01) 0px, rgba(0,0,0,0.01) 1px, transparent 1px, transparent 10px);
+            pointer-events: none; z-index: -1;
+        }
+        .floating-shape {
+            position: absolute;
+            width: 300px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(184,134,11,0.1) 0%, transparent 70%);
+            z-index: 0; pointer-events: none;
+        }
+        .shape-1 { top: -100px; left: -100px; animation: float 20s infinite ease-in-out; }
+        .shape-2 { bottom: -50px; right: -50px; width: 200px; height: 200px; animation: float 15s infinite ease-in-out reverse; }
+        @keyframes float {
+            0% { transform: translate(0,0) rotate(0deg); }
+            33% { transform: translate(30px,-30px) rotate(5deg); }
+            66% { transform: translate(-20px,20px) rotate(-5deg); }
+            100% { transform: translate(0,0) rotate(0deg); }
+        }
+        nav {
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+            padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+        .logo { display: flex; align-items: center; gap: 15px; }
+        .logo img { height: 50px; width: auto; object-fit: contain; }
+        .logo h1 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--gold); letter-spacing: 1px; }
+        nav a { text-decoration: none; color: #444; margin: 0 0.8rem; font-weight: 600; transition: 0.3s; }
+        nav a:hover { color: var(--gold); }
+        nav a i { margin-right: 5px; }
+
+        .hero-mini {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+            color: white; text-align: center; padding: 3rem 1rem;
+            border-bottom: 4px solid var(--gold); position: relative; overflow: hidden;
+        }
+        .hero-mini::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(184,134,11,0.2) 0%, transparent 60%);
+            animation: rotate 40s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .hero-mini h2 { font-size: 2.5rem; font-weight: 900; color: var(--gold-light); margin-bottom: 0.5rem; position: relative; z-index: 2; }
+        .hero-mini p { font-size: 1.2rem; max-width: 700px; margin: 0 auto; opacity: 0.95; position: relative; z-index: 2; }
+
+        .calc-wrapper { max-width: 1200px; margin: 4rem auto; padding: 0 1.5rem; position: relative; z-index: 2; }
+        .calc-box {
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(15px);
+            border: 2px solid var(--gold); border-radius: 40px; padding: 3rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,134,11,0.3) inset;
+            position: relative; overflow: hidden;
+        }
+        .calc-box::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(184,134,11,0.05) 100%);
+            z-index: -1;
+        }
+        .featured-badge {
+            position: absolute; top: -10px; right: -10px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #111; width: 100px; height: 100px; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); font-weight: 900; border: 3px solid white; z-index: 10;
+        }
+        .featured-badge i { font-size: 2rem; margin-bottom: 0.2rem; }
+        .featured-badge span { font-size: 0.9rem; text-align: center; }
+        .calc-box h2 { font-size: 2.2rem; font-weight: 900; color: var(--gold); margin-bottom: 2rem; text-align: center; }
+
+        .currency-row {
+            display: flex; align-items: center; justify-content: flex-start; gap: 1rem;
+            background: var(--gold-soft); padding: 0.8rem 1.5rem; border-radius: 50px;
+            margin-bottom: 2rem; flex-wrap: wrap;
+        }
+        .currency-row label { font-weight: 900; color: var(--dark); margin: 0; }
+        .currency-row select, .currency-row input {
+            width: 150px; padding: 0.5rem 1rem; border: 2px solid var(--gold); border-radius: 30px;
+            background: white; font-weight: 700; font-family: 'Inter', sans-serif;
+        }
+        .currency-row input { width: 250px; }
+
+        .section-title-sm {
+            font-size: 1.5rem; font-weight: 900; color: var(--dark);
+            margin: 1.5rem 0 1rem 0; border-bottom: 2px solid var(--gold-soft); padding-bottom: 0.5rem;
+        }
+        .form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+        .form-group { flex: 1 1 200px; margin-bottom: 1rem; position: relative; }
+        label { display: block; margin-bottom: 0.3rem; font-weight: 700; color: var(--dark); font-size: 0.95rem; }
+        label i { color: var(--gold); margin-right: 0.4rem; }
+        input, select {
+            width: 100%; padding: 0.8rem 1rem; border: 2px solid #ddd; border-radius: 30px;
+            font-family: 'Inter', sans-serif; font-size: 1rem; transition: 0.3s; background: var(--offwhite);
+        }
+        input:focus, select:focus {
+            outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,134,11,0.2); background: var(--white);
+        }
+        .tooltip { position: relative; cursor: help; }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background-color: var(--dark);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 130%; left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85rem;
+            border: 1px solid var(--gold);
+            pointer-events: none;
+        }
+        .tooltip .tooltiptext::after {
+            content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px;
+            border-width: 5px; border-style: solid; border-color: var(--dark) transparent transparent transparent;
+        }
+        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+
+        .btn-calculate {
+            display: flex; align-items: center; justify-content: center; gap: 1rem;
+            width: 100%; padding: 1.2rem; border-radius: 50px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #111; font-weight: 900; font-size: 1.2rem; border: none; cursor: pointer;
+            transition: 0.3s; box-shadow: 0 5px 20px rgba(184,134,11,0.4); margin: 2rem 0;
+        }
+        .btn-calculate:hover {
+            background: linear-gradient(135deg, #111, #222); color: var(--gold);
+            transform: translateY(-3px); box-shadow: 0 10px 30px rgba(184,134,11,0.6);
+        }
+
+        .results-section { margin-top: 2rem; }
+        .results-cards {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;
+        }
+        .result-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #fff 100%);
+            border: 1px solid var(--gold-light); border-radius: 20px; padding: 1.5rem; text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
+        }
+        .result-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 10px 25px rgba(184,134,11,0.15); }
+        .result-card i { font-size: 2rem; color: var(--gold); margin-bottom: 0.5rem; }
+        .result-card h4 { font-size: 1rem; font-weight: 700; color: #666; margin-bottom: 0.5rem; }
+        .result-card .value { font-size: 1.8rem; font-weight: 900; color: var(--gold); }
+        .result-card .unit { font-size: 0.9rem; color: #777; margin-left: 0.2rem; }
+        .result-card .status { font-size: 0.9rem; margin-top: 0.3rem; padding: 0.2rem 0.5rem; border-radius: 20px; display: inline-block; }
+        .status-good { background: #28a745; color: white; }
+        .status-bad { background: #dc3545; color: white; }
+        .status-warning { background: #ffc107; color: #111; }
+
+        .table-container { overflow-x: auto; margin-top: 2rem; border: 1px solid var(--gold-light); border-radius: 20px; background: white; padding: 1rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        th { background: var(--gold-soft); color: var(--dark); font-weight: 900; padding: 0.75rem; border-bottom: 2px solid var(--gold); }
+        td { padding: 0.75rem; border-bottom: 1px solid #eee; text-align: center; }
+        tr:last-child td { border-bottom: none; }
+        .positive { color: #28a745; font-weight: 700; }
+        .negative { color: #dc3545; font-weight: 700; }
+
+        .alert {
+            padding: 0.8rem;
+            border-radius: 20px;
+            margin: 0.5rem 0;
+            font-weight: 700;
+        }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-warning { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        .export-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.8rem 2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .export-btn:hover { background: #218838; transform: translateY(-2px); }
+        .export-word-btn {
+            background: #1e4a7a;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.8rem 2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .export-word-btn:hover { background: #0e3a5a; transform: translateY(-2px); }
+        .export-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            background: white;
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid var(--gold-light);
+            height: 300px;
+        }
+
+        footer {
+            background: linear-gradient(145deg, #111, #1a1a1a); color: #ddd;
+            padding: 3rem 1rem 2rem; border-top: 3px solid var(--gold); margin-top: 4rem;
+        }
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+        .footer-content { display: flex; flex-direction: column; gap: 2rem; }
+        .footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem; }
+        .footer-social { display: flex; gap: 1.5rem; }
+        .footer-social a { color: var(--gold); font-size: 1.8rem; transition: 0.3s; }
+        .footer-social a:hover { color: var(--gold-light); transform: translateY(-3px); }
+        .footer-logo-box { text-align: center; }
+        .footer-logo-box h2 { color: var(--gold); font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .footer-logo-box div { width: 60px; height: 2px; background: var(--gold); margin: 0 auto; }
+        .footer-payment .payment-card {
+            background: rgba(255,255,255,0.05); padding: 0.8rem 1.5rem; border-radius: 50px;
+            display: flex; gap: 1.5rem; align-items: center; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-payment img { height: 25px; filter: brightness(0.9); transition: 0.2s; }
+        .footer-payment img:hover { filter: brightness(1.2); }
+        hr { border: none; border-top: 1px solid rgba(184,134,11,0.2); }
+        .copyright { text-align: center; font-size: 0.9rem; color: #777; }
+        .copyright span { color: var(--gold); font-weight: bold; }
+
+       
+        /* Dynamic equipment field styles */
+        .equipment-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+            background: var(--offwhite);
+            padding: 0.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--gold-light);
+        }
+        .equipment-row input {
+            flex: 1;
+            min-width: 0;
+        }
+        .equipment-row .eq-name { flex: 2; }
+        .equipment-row .eq-power { flex: 1; }
+        .equipment-row .eq-cost { flex: 1; }
+        .equipment-row .eq-space { flex: 1; }
+        .remove-equipment {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .add-equipment-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+
+   
+    <section class="hero-mini">
+        <h2>İleri Düzey Restoran Teknik Fizibilite Çalışması</h2>
+        <p>Alan, ekipman, üretim kapasitesi, performans göstergeleri ve teknik-finansal değerlendirme için kapsamlı analiz</p>
+    </section>
+
+    <section class="calc-wrapper">
+        <div class="calc-box" data-aos="fade-up">
+            <div class="featured-badge">
+                <i class="fas fa-utensils"></i>
+                <span>Teknik</span>
+            </div>
+            <h2>Proje Bilgileri</h2>
+
+            <!-- Para birimi ve kurum adı -->
+            <div class="currency-row">
+                <label><i class="fas fa-coins"></i> Para Birimi:</label>
+                <select id="currencySelect">
+                    <option value="$" selected>Dolar ($)</option>
+                    <option value="€">Euro (€)</option>
+                    <option value="₺">Türk Lirası (₺)</option>
+                    <option value="£">Sterlin (£)</option>
+                    <option value="KD">KWD (د.ك)</option>
+                    <option value="SR">SAR (ر.س)</option>
+                </select>
+                <label><i class="fas fa-building"></i> Kurum Adı:</label>
+                <input type="text" id="companyName" value="Örnek Şirket" placeholder="Yararlanıcı kurum">
+            </div>
+
+            <!-- Kapsam ve özellikler -->
+            <div class="section-title-sm">📋 Kapsam ve Özellikler</div>
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-utensils"></i> Mutfak Tipi</label>
+                    <select id="kitchenType">
+                        <option value="fastfood">Fast Food</option>
+                        <option value="fine">Lüks Restoran</option>
+                        <option value="eastern">Doğu Mutfağı</option>
+                        <option value="italian">İtalyan</option>
+                        <option value="grill">Izgara</option>
+                        <option value="seafood">Deniz Ürünleri</option>
+                        <option value="cafe">Kafe</option>
+                    </select>
+                    <span class="tooltiptext">Restoranın ana mutfak türü</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-chair"></i> Koltuk Sayısı</label>
+                    <input type="number" id="seats" value="50" min="1" step="5">
+                    <span class="tooltiptext">Toplam oturma kapasitesi</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-concierge-bell"></i> Servis Modeli</label>
+                    <select id="serviceModel">
+                        <option value="waiter">Masa Servisi</option>
+                        <option value="self">Self Servis</option>
+                        <option value="delivery">Sadece Teslimat</option>
+                        <option value="mixed">Karma</option>
+                    </select>
+                    <span class="tooltiptext">Servis sunum şekli</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-clock"></i> Günlük Çalışma Saati</label>
+                    <input type="number" id="hoursOpen" value="12" min="1" max="24">
+                    <span class="tooltiptext">Günlük açık kalınan saat</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-moon"></i> Çalışma Periyotları</label>
+                    <select id="shifts">
+                        <option value="1">Tek periyot (Öğle)</option>
+                        <option value="2">İki periyot (Öğle + Akşam)</option>
+                        <option value="3">Çoklu periyot (Kahvaltı + Öğle + Akşam)</option>
+                    </select>
+                    <span class="tooltiptext">Günlük çalışma periyodu sayısı</span>
+                </div>
+            </div>
+
+            <!-- Konum analizi -->
+            <div class="section-title-sm">📍 Konum Analizi</div>
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-vector-square"></i> Toplam Alan (m²)</label>
+                    <input type="number" id="totalArea" value="150" min="20" step="10">
+                    <span class="tooltiptext">Restoranın toplam alanı</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-percent"></i> Mutfak Alanı Yüzdesi (%)</label>
+                    <input type="number" id="kitchenPercent" value="35" min="20" max="60" step="5">
+                    <span class="tooltiptext">Toplam alanın mutfak yüzdesi</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-bolt"></i> Mevcut Elektrik Kapasitesi (Amper)</label>
+                    <input type="number" id="electricalCapacity" value="200" min="50" step="10">
+                    <span class="tooltiptext">Mevcut elektrik kapasitesi</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-water"></i> Su Kaynağı</label>
+                    <select id="waterAvailability">
+                        <option value="yes">Evet - Uygun</option>
+                        <option value="partial">Geliştirilmeli</option>
+                        <option value="no">Hayır - Uygun değil</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-wind"></i> Havalandırma Sistemi</label>
+                    <select id="ventilation">
+                        <option value="yes">Evet - Uygun</option>
+                        <option value="partial">Geliştirilmeli</option>
+                        <option value="no">Hayır - Uygun değil</option>
+                    </select>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-truck"></i> Teslimat Uygunluğu</label>
+                    <select id="deliveryAccess">
+                        <option value="yes">Evet - Mükemmel</option>
+                        <option value="partial">Orta</option>
+                        <option value="no">Zor</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Ekipman gereksinimleri (dinamik sistem) -->
+            <div class="section-title-sm">🔧 Ekipman Gereksinimleri</div>
+            <div id="equipmentContainer"></div>
+            <button class="add-equipment-btn" id="addEquipmentBtn">➕ Ekipman Ekle</button>
+            <div id="powerAlert" class="alert" style="display:none;"></div>
+
+            <!-- Üretim kapasitesi ve operasyonel verimlilik -->
+            <div class="section-title-sm">⚡ Üretim Kapasitesi ve Operasyonel Verimlilik</div>
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-rotate-left"></i> Masa Dönüş Hızı</label>
+                    <input type="number" id="turnoverRate" value="2" min="0.5" step="0.5">
+                    <span class="tooltiptext">Yoğun saatte bir masanın kaç kez dolduğu</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-clock"></i> Günlük Yoğun Saat</label>
+                    <input type="number" id="peakHours" value="4" min="1" max="12">
+                    <span class="tooltiptext">Günlük yoğun saat sayısı</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-percent"></i> Beklenen Doluluk Oranı %</label>
+                    <input type="number" id="occupancyRate" value="70" min="10" max="100" step="5">
+                    <span class="tooltiptext">Maksimum kapasitenin yüzdesi olarak beklenen doluluk</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-hamburger"></i> Ortalama Yemek Fiyatı</label>
+                    <input type="number" id="avgMealPrice" value="50" step="5">
+                    <span class="tooltiptext">Müşteri başına ortalama yemek fiyatı</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-percent"></i> Yiyecek Maliyeti (%)</label>
+                    <input type="number" id="foodCostPercent" value="30" min="10" max="80">
+                    <span class="tooltiptext">Yemek fiyatının yiyecek maliyeti yüzdesi</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-briefcase"></i> Çalışan Sayısı</label>
+                    <input type="number" id="employeesCount" value="6" min="1" step="1">
+                    <span class="tooltiptext">Çalışan personel sayısı</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-user-tie"></i> Ortalama Aylık Maaş</label>
+                    <input type="number" id="avgSalary" value="2000" step="100">
+                    <span class="tooltiptext">Çalışan başına ortalama aylık maaş</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-home"></i> Aylık Kira</label>
+                    <input type="number" id="monthlyRent" value="4000" step="100">
+                    <span class="tooltiptext">Restoranın aylık kirası</span>
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-tools"></i> Diğer Operasyonel Giderler</label>
+                    <input type="number" id="otherOpCost" value="2000" step="100">
+                    <span class="tooltiptext">Elektrik, su, internet, pazarlama gibi aylık diğer giderler</span>
+                </div>
+            </div>
+
+            <!-- Ekipman amortismanı -->
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-calendar-alt"></i> Ekipman Ekonomik Ömrü (Yıl)</label>
+                    <input type="number" id="equipmentLife" value="10" min="1" max="30" step="1">
+                    <span class="tooltiptext">Amortisman hesaplaması için ekipmanın tahmini ömrü</span>
+                </div>
+            </div>
+
+            <!-- Kurulum maliyetleri (tek seferlik) -->
+            <div class="section-title-sm">💰 Kurulum Maliyetleri (Tek Seferlik)</div>
+            <div class="form-row">
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-hammer"></i> Dekorasyon ve İnşaat Maliyeti</label>
+                    <input type="number" id="constructionCost" value="50000" step="1000">
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-file-signature"></i> Ruhsat ve Harçlar</label>
+                    <input type="number" id="licensesCost" value="5000" step="500">
+                </div>
+                <div class="form-group tooltip">
+                    <label><i class="fas fa-hand-holding-usd"></i> İşletme Sermayesi (3 Ay)</label>
+                    <input type="number" id="workingCapital" value="15000" step="1000">
+                </div>
+            </div>
+
+            <button class="btn-calculate" id="calculateBtn"><i class="fas fa-calculator"></i> Teknik Fizibiliteyi Hesapla</button>
+
+            <!-- Sonuçlar alanı -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-cards" id="kpiCards"></div>
+                <div id="warnings" class="alert" style="display:none;"></div>
+
+                <!-- Grafikler -->
+                <div class="section-title-sm">📊 Finansal Performans Analizi</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="chart-container">
+                            <canvas id="financeChart"></canvas>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="chart-container">
+                            <canvas id="riskChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proje değerlendirmesi -->
+                <div id="projectRatingCard" class="result-card" style="background:var(--gold-soft);"></div>
+
+                <!-- Dışa aktarma butonları -->
+                <div class="export-container">
+                    <button class="export-word-btn" id="exportWordBtn"><i class="fas fa-file-word"></i> Word Raporu Oluştur</button>
+                </div>
+            </div>
+
+            <div id="initialMessage" style="margin-top:1rem; color:#666; text-align:center;">
+                <i class="fas fa-robot" style="color: var(--gold);"></i> Sonuçlar hesaplama butonuna tıkladıktan sonra görüntülenecektir.
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-row">
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/faroukazem/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100091571594026&sk=about" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/905550196682" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                    <div class="footer-logo-box">
+                        <h2>Farouk Danışmanlık ve İş Grubu</h2>
+                        <div></div>
+                    </div>
+                    <div class="footer-payment">
+                        <div class="payment-card">
+                            <img src="https://img.icons8.com/color/48/visa.png" alt="Visa">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="copyright">
+                    Tüm Hakları Saklıdır © 2026 <span>FAROUK GRUP</span>
+                    <p>Adnan Kahveci, Beylikdüzü / İstanbul, Türkiye</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+                </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 100 });
+
+
+        // ------------------ Dynamic equipment logic ------------------
+        const equipmentContainer = document.getElementById('equipmentContainer');
+
+        function addEquipmentRow(name = '', power = '', cost = '', space = '') {
+            const row = document.createElement('div');
+            row.className = 'equipment-row';
+            row.innerHTML = `
+                <input type="text" class="eq-name" placeholder="Ekipman adı" value="${name}">
+                <input type="number" class="eq-power" placeholder="Güç (kW)" value="${power}" step="0.1" min="0">
+                <input type="number" class="eq-cost" placeholder="Fiyat (para birimi)" value="${cost}" step="100" min="0">
+                <input type="number" class="eq-space" placeholder="Alan (m²)" value="${space}" step="0.1" min="0">
+                <button class="remove-equipment" onclick="this.parentElement.remove()">×</button>
+            `;
+            equipmentContainer.appendChild(row);
+        }
+
+        // Add default rows on page load
+        addEquipmentRow('Fırın', '8', '5000', '2.5');
+        addEquipmentRow('Izgara', '6', '3000', '2');
+
+        document.getElementById('addEquipmentBtn').addEventListener('click', () => addEquipmentRow());
+
+        function getEquipmentData() {
+            const rows = document.querySelectorAll('#equipmentContainer .equipment-row');
+            const equipment = [];
+            rows.forEach(row => {
+                const name = row.querySelector('.eq-name')?.value || '';
+                const power = parseFloat(row.querySelector('.eq-power')?.value) || 0;
+                const cost = parseFloat(row.querySelector('.eq-cost')?.value) || 0;
+                const space = parseFloat(row.querySelector('.eq-space')?.value) || 0;
+                if (name) equipment.push({ name, power, cost, space });
+            });
+            return equipment;
+        }
+
+        function calculateEquipmentTotals() {
+            const equipment = getEquipmentData();
+            let totalPower = 0, totalCost = 0, totalSpace = 0;
+            equipment.forEach(eq => {
+                totalPower += eq.power;
+                totalCost += eq.cost;
+                totalSpace += eq.space;
+            });
+            return { totalPower, totalCost, totalSpace };
+        }
+
+        function updatePowerAlert() {
+            const electricalCapacity = parseFloat(document.getElementById('electricalCapacity').value) || 200;
+            const { totalPower } = calculateEquipmentTotals();
+            const requiredAmps = (totalPower * 1000) / 220;
+            const powerAlert = document.getElementById('powerAlert');
+            if (requiredAmps > electricalCapacity) {
+                powerAlert.style.display = 'block';
+                powerAlert.className = 'alert alert-danger';
+                powerAlert.innerHTML = `⚠️ Uyarı: Gerekli toplam elektrik gücü (${requiredAmps.toFixed(0)} Amper) mevcut kapasiteyi (${electricalCapacity} Amper) aşıyor.`;
+            } else {
+                powerAlert.style.display = 'none';
+            }
+        }
+
+        document.getElementById('electricalCapacity').addEventListener('input', updatePowerAlert);
+        equipmentContainer.addEventListener('input', updatePowerAlert);
+
+        // ------------------ Main calculation ------------------
+        let financeChart, riskChart;
+
+        function calculateAll() {
+            const currency = document.getElementById('currencySelect').value;
+            const companyName = document.getElementById('companyName').value || 'Yararlanıcı Kurum';
+
+            // Read inputs
+            const seats = parseFloat(document.getElementById('seats').value) || 50;
+            const hoursOpen = parseFloat(document.getElementById('hoursOpen').value) || 12;
+            const totalArea = parseFloat(document.getElementById('totalArea').value) || 150;
+            const kitchenPercent = parseFloat(document.getElementById('kitchenPercent').value) || 35;
+            const electricalCapacity = parseFloat(document.getElementById('electricalCapacity').value) || 200;
+            const waterAvailabilityText = document.getElementById('waterAvailability').options[document.getElementById('waterAvailability').selectedIndex].text;
+            const ventilationText = document.getElementById('ventilation').options[document.getElementById('ventilation').selectedIndex].text;
+
+            // Equipment data
+            const { totalPower, totalCost: equipmentCost, totalSpace } = calculateEquipmentTotals();
+
+            const turnoverRate = parseFloat(document.getElementById('turnoverRate').value) || 2;
+            const peakHours = parseFloat(document.getElementById('peakHours').value) || 4;
+            const occupancyRate = parseFloat(document.getElementById('occupancyRate').value) / 100 || 0.7;
+            const avgMealPrice = parseFloat(document.getElementById('avgMealPrice').value) || 50;
+            const foodCostPercent = parseFloat(document.getElementById('foodCostPercent').value) / 100 || 0.3;
+            const employeesCount = parseFloat(document.getElementById('employeesCount').value) || 6;
+            const avgSalary = parseFloat(document.getElementById('avgSalary').value) || 2000;
+            const monthlyRent = parseFloat(document.getElementById('monthlyRent').value) || 4000;
+            const otherOpCost = parseFloat(document.getElementById('otherOpCost').value) || 2000;
+            const equipmentLife = parseFloat(document.getElementById('equipmentLife').value) || 10;
+            const constructionCost = parseFloat(document.getElementById('constructionCost').value) || 50000;
+            const licensesCost = parseFloat(document.getElementById('licensesCost').value) || 5000;
+            const workingCapital = parseFloat(document.getElementById('workingCapital').value) || 15000;
+
+            // Areas
+            const kitchenArea = totalArea * (kitchenPercent / 100);
+            const remainingArea = totalArea - kitchenArea;
+            const diningArea = remainingArea * 0.75;
+            const seatDensity = diningArea / seats;
+
+            // Capacity and revenue
+            const maxCustomersDaily = seats * turnoverRate * peakHours;
+            const actualCustomersDaily = maxCustomersDaily * occupancyRate;
+            const monthlyRevenue = actualCustomersDaily * avgMealPrice * 26;
+            const monthlyFoodCost = monthlyRevenue * foodCostPercent;
+            const monthlyLaborCost = employeesCount * avgSalary;
+            const monthlyFixedCosts = monthlyRent + otherOpCost;
+            const totalMonthlyExpenses = monthlyFoodCost + monthlyLaborCost + monthlyFixedCosts;
+            const netProfit = monthlyRevenue - totalMonthlyExpenses;
+
+            // Total investment
+            const totalInvestment = constructionCost + licensesCost + equipmentCost + workingCapital;
+
+            // Monthly depreciation (straight line)
+            const monthlyDepreciation = equipmentCost / (equipmentLife * 12);
+            const netProfitAfterDepreciation = netProfit - monthlyDepreciation;
+            const accountingProfit = netProfitAfterDepreciation;
+
+            // Breakeven
+            const contributionPerMeal = avgMealPrice * (1 - foodCostPercent);
+            const breakEvenMeals = (monthlyFixedCosts + monthlyLaborCost) / contributionPerMeal;
+            const breakEvenRevenue = breakEvenMeals * avgMealPrice;
+
+            // Indicators
+            const revenuePerSeat = monthlyRevenue / seats;
+            const primeCost = monthlyFoodCost + monthlyLaborCost;
+            const primePercent = (primeCost / monthlyRevenue) * 100;
+            const laborCostPercent = (monthlyLaborCost / monthlyRevenue) * 100;
+            const fixedCostPercent = (monthlyFixedCosts / monthlyRevenue) * 100;
+
+            // Risk analysis (20% drop)
+            const riskRevenue = monthlyRevenue * 0.8;
+            const riskProfit = riskRevenue - (riskRevenue * foodCostPercent) - monthlyLaborCost - monthlyFixedCosts - monthlyDepreciation;
+
+            // Payback period
+            const paybackMonths = (accountingProfit > 0) ? totalInvestment / accountingProfit : Infinity;
+
+            // Smart warnings
+            const warnings = [];
+            if (seatDensity < 1.2) warnings.push("⚠️ Koltuklar fazla ve alan dar (yüksek yoğunluk)");
+            const staffRatio = seats / employeesCount;
+            if (staffRatio < 8) warnings.push("⚠️ Koltuk sayısına göre çalışan sayısı yüksek");
+            if (primePercent > 65) warnings.push("⚠️ Prime Cost yüksek (>%65)");
+            if (accountingProfit < 0) warnings.push("🔴 Mevcut tahminlere göre proje zarar ediyor");
+            if (monthlyFixedCosts < monthlyRevenue * 0.15) warnings.push("⚠️ Sabit maliyetler çok düşük (gelirin %15'inden az)");
+            if (laborCostPercent < 15) warnings.push("⚠️ İşçilik maliyeti oranı çok düşük (<%15)");
+            if (totalInvestment / seats > 5000) warnings.push("💡 Koltuk başına yatırım yüksek, fizibilitesini kontrol edin");
+
+            // Technical score
+            let technicalScore = 0;
+            const requiredAmps = (totalPower * 1000) / 220;
+            if (electricalCapacity >= requiredAmps * 1.2) technicalScore += 30;
+            else if (electricalCapacity >= requiredAmps) technicalScore += 25;
+            else if (electricalCapacity >= requiredAmps * 0.8) technicalScore += 15;
+            else technicalScore += 5;
+
+            if (waterAvailabilityText.includes('Uygun')) technicalScore += 10;
+            else if (waterAvailabilityText.includes('Geliştirilmeli')) technicalScore += 5;
+            if (ventilationText.includes('Uygun')) technicalScore += 10;
+            else if (ventilationText.includes('Geliştirilmeli')) technicalScore += 5;
+
+            if (seatDensity >= 1.2 && seatDensity <= 1.8) technicalScore += 10;
+            else if (seatDensity >= 1.0 && seatDensity < 1.2) technicalScore += 5;
+            else if (seatDensity > 1.8 && seatDensity <= 2.2) technicalScore += 5;
+
+            if (totalSpace <= kitchenArea * 0.5) technicalScore += 10;
+            else if (totalSpace <= kitchenArea * 0.7) technicalScore += 5;
+
+            technicalScore = Math.min(technicalScore, 100);
+            let technicalRating = '', technicalColor = '';
+            if (technicalScore >= 85) { technicalRating = '🟢 Mükemmel'; technicalColor = 'alert-success'; }
+            else if (technicalScore >= 70) { technicalRating = '🟡 İyi'; technicalColor = 'alert-warning'; }
+            else if (technicalScore >= 50) { technicalRating = '🟠 Orta'; technicalColor = 'alert-warning'; }
+            else { technicalRating = '🔴 Zayıf'; technicalColor = 'alert-danger'; }
+
+            // Financial score
+            let financialScore = 0;
+            if (primePercent <= 55) financialScore += 30;
+            else if (primePercent <= 65) financialScore += 20;
+            else if (primePercent <= 75) financialScore += 10;
+
+            if (accountingProfit > 0) {
+                const profitMargin = accountingProfit / monthlyRevenue;
+                if (profitMargin >= 0.2) financialScore += 30;
+                else if (profitMargin >= 0.1) financialScore += 20;
+                else if (profitMargin >= 0.05) financialScore += 15;
+                else financialScore += 10;
+            } else {
+                financialScore += 0;
+            }
+
+            if (accountingProfit > 0 && totalInvestment > 0) {
+                if (paybackMonths <= 12) financialScore += 20;
+                else if (paybackMonths <= 24) financialScore += 15;
+                else if (paybackMonths <= 36) financialScore += 10;
+                else financialScore += 5;
+            } else if (accountingProfit <= 0) {
+                financialScore = Math.max(0, financialScore - 10);
+            }
+
+            const maxMonthlyMeals = maxCustomersDaily * 26;
+            if (breakEvenMeals <= maxMonthlyMeals * 0.5) financialScore += 20;
+            else if (breakEvenMeals <= maxMonthlyMeals * 0.7) financialScore += 15;
+            else if (breakEvenMeals <= maxMonthlyMeals * 0.9) financialScore += 10;
+            else if (breakEvenMeals <= maxMonthlyMeals) financialScore += 5;
+
+            financialScore = Math.min(financialScore, 100);
+            let financialRating = '', financialColor = '';
+            if (financialScore >= 85) { financialRating = '🟢 Mükemmel'; financialColor = 'alert-success'; }
+            else if (financialScore >= 70) { financialRating = '🟡 İyi'; financialColor = 'alert-warning'; }
+            else if (financialScore >= 50) { financialRating = '🟠 Orta'; financialColor = 'alert-warning'; }
+            else { financialRating = '🔴 Zayıf'; financialColor = 'alert-danger'; }
+
+            // Display results
+            document.getElementById('initialMessage').style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'block';
+
+            document.getElementById('kpiCards').innerHTML = `
+                <div class="result-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h4>Aylık Gelir</h4>
+                    <div class="value">${currency}${Math.round(monthlyRevenue)}</div>
+                </div>
+                <div class="result-card">
+                    <i class="fas fa-file-invoice"></i>
+                    <h4>Net Kâr (Amortisman Sonrası)</h4>
+                    <div class="value">${currency}${Math.round(accountingProfit)}</div>
+                    <div class="status ${accountingProfit > 0 ? 'status-good' : 'status-bad'}">${accountingProfit > 0 ? 'Kârlı' : 'Zarar'}</div>
+                </div>
+                <div class="result-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>Başabaş Noktası (Gelir)</h4>
+                    <div class="value">${currency}${Math.round(breakEvenRevenue)}</div>
+                </div>
+                <div class="result-card">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <h4>Geri Ödeme Süresi</h4>
+                    <div class="value">${paybackMonths === Infinity ? '∞' : paybackMonths.toFixed(1)}</div>
+                    <div class="unit">Ay</div>
+                </div>
+            `;
+
+            if (warnings.length > 0) {
+                document.getElementById('warnings').style.display = 'block';
+                document.getElementById('warnings').innerHTML = `<strong>⚠️ Uyarılar:</strong><br>${warnings.join('<br>')}`;
+                document.getElementById('warnings').className = 'alert alert-warning';
+            } else {
+                document.getElementById('warnings').style.display = 'none';
+            }
+
+            document.getElementById('projectRatingCard').innerHTML = `
+                <h3><i class="fas fa-star"></i> Proje Değerlendirmesi</h3>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <h4>Teknik Değerlendirme</h4>
+                        <div class="alert ${technicalColor}" style="font-size:1.2rem;">${technicalRating}</div>
+                        <p>Teknik Puan: ${technicalScore}/100</p>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <h4>Finansal Değerlendirme</h4>
+                        <div class="alert ${financialColor}" style="font-size:1.2rem;">${financialRating}</div>
+                        <p>Finansal Puan: ${financialScore}/100</p>
+                    </div>
+                </div>
+            `;
+
+            // Charts
+            if (financeChart) financeChart.destroy();
+            const ctx1 = document.getElementById('financeChart').getContext('2d');
+            financeChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['Gelir', 'Yiyecek Maliyeti', 'Maaşlar', 'Sabit Giderler', 'Net Kâr'],
+                    datasets: [{
+                        label: `Değer (${currency})`,
+                        data: [monthlyRevenue, monthlyFoodCost, monthlyLaborCost, monthlyFixedCosts, accountingProfit],
+                        backgroundColor: ['#28a745', '#ffc107', '#17a2b8', '#fd7e14', '#b8860b']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            if (riskChart) riskChart.destroy();
+            const ctx2 = document.getElementById('riskChart').getContext('2d');
+            riskChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Normal', '%20 Düşüş'],
+                    datasets: [{
+                        label: `Net Kâr (${currency})`,
+                        data: [accountingProfit, riskProfit],
+                        backgroundColor: ['#28a745', '#dc3545']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        document.getElementById('calculateBtn').addEventListener('click', calculateAll);
+
+        // ------------------ Word export (enhanced) ------------------
+        async function exportToWord() {
+            const currency = document.getElementById('currencySelect').value;
+            const companyName = document.getElementById('companyName').value || 'Yararlanıcı Kurum';
+            if (document.getElementById('resultsSection').style.display === 'none') {
+                alert('Lütfen önce analiz yapın.');
+                return;
+            }
+
+            try {
+                // Capture chart images
+                const chart1 = document.getElementById('financeChart');
+                const chart2 = document.getElementById('riskChart');
+                const [canvas1, canvas2] = await Promise.all([
+                    html2canvas(chart1, { scale: 2, backgroundColor: '#ffffff' }),
+                    html2canvas(chart2, { scale: 2, backgroundColor: '#ffffff' })
+                ]);
+                const img1 = canvas1.toDataURL('image/png');
+                const img2 = canvas2.toDataURL('image/png');
+
+                // Collect all inputs
+                const kitchenType = document.getElementById('kitchenType').options[document.getElementById('kitchenType').selectedIndex].text;
+                const seats = document.getElementById('seats').value;
+                const serviceModel = document.getElementById('serviceModel').options[document.getElementById('serviceModel').selectedIndex].text;
+                const hoursOpen = document.getElementById('hoursOpen').value;
+                const shifts = document.getElementById('shifts').options[document.getElementById('shifts').selectedIndex].text;
+                const totalArea = document.getElementById('totalArea').value;
+                const kitchenPercent = document.getElementById('kitchenPercent').value;
+                const electricalCapacity = document.getElementById('electricalCapacity').value;
+                const water = document.getElementById('waterAvailability').options[document.getElementById('waterAvailability').selectedIndex].text;
+                const ventilation = document.getElementById('ventilation').options[document.getElementById('ventilation').selectedIndex].text;
+                const deliveryAccess = document.getElementById('deliveryAccess').options[document.getElementById('deliveryAccess').selectedIndex].text;
+
+                // Equipment data
+                const equipmentRows = document.querySelectorAll('#equipmentContainer .equipment-row');
+                let equipmentHTML = '';
+                equipmentRows.forEach(row => {
+                    const name = row.querySelector('.eq-name')?.value || '';
+                    const power = row.querySelector('.eq-power')?.value || 0;
+                    const cost = row.querySelector('.eq-cost')?.value || 0;
+                    const space = row.querySelector('.eq-space')?.value || 0;
+                    if (name) {
+                        equipmentHTML += `<tr><td>${name}</td><td>${power} kW</td><td>${currency} ${cost}</td><td>${space} m²</td></tr>`;
+                    }
+                });
+
+                const turnoverRate = document.getElementById('turnoverRate').value;
+                const peakHours = document.getElementById('peakHours').value;
+                const occupancyRate = document.getElementById('occupancyRate').value;
+                const avgMealPrice = document.getElementById('avgMealPrice').value;
+                const foodCostPercent = document.getElementById('foodCostPercent').value;
+                const employeesCount = document.getElementById('employeesCount').value;
+                const avgSalary = document.getElementById('avgSalary').value;
+                const monthlyRent = document.getElementById('monthlyRent').value;
+                const otherOpCost = document.getElementById('otherOpCost').value;
+                const equipmentLife = document.getElementById('equipmentLife').value;
+                const constructionCost = document.getElementById('constructionCost').value;
+                const licensesCost = document.getElementById('licensesCost').value;
+                const workingCapital = document.getElementById('workingCapital').value;
+
+                // KPI cards into a table
+                const kpiCards = document.querySelectorAll('.result-card');
+                let kpiRows = '';
+                let row = '';
+                let count = 0;
+                kpiCards.forEach((card, index) => {
+                    const icon = card.querySelector('i') ? card.querySelector('i').outerHTML : '';
+                    const title = card.querySelector('h4') ? card.querySelector('h4').innerText : '';
+                    const value = card.querySelector('.value') ? card.querySelector('.value').innerText : '';
+                    const unit = card.querySelector('.unit') ? card.querySelector('.unit').innerText : '';
+                    const status = card.querySelector('.status') ? card.querySelector('.status').outerHTML : '';
+                    const cell = `
+                        <td style="border:1px solid #b8860b; padding:10px; text-align:center; background:#fefcf6;">
+                            ${icon}
+                            <h4 style="margin:0.5rem 0; color:#666;">${title}</h4>
+                            <div style="font-size:1.8rem; font-weight:900; color:#b8860b;">${value}</div>
+                            ${unit ? `<div style="font-size:0.9rem; color:#777;">${unit}</div>` : ''}
+                            ${status ? status.replace(/class="status/g, 'style="margin-top:0.3rem; padding:0.2rem 0.5rem; border-radius:20px; display:inline-block;') : ''}
+                        </td>
+                    `;
+                    row += cell;
+                    count++;
+                    if (count % 2 === 0 || index === kpiCards.length - 1) {
+                        kpiRows += `<tr>${row}</tr>`;
+                        row = '';
+                    }
+                });
+
+                const ratingHTML = document.getElementById('projectRatingCard').innerHTML;
+                const warningsHTML = document.getElementById('warnings').innerHTML;
+
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                // Full report
+                const reportHTML = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                    <head>
+                        <meta charset='utf-8'>
+                        <title>Teknik Fizibilite Raporu - FAROUK GRUP</title>
+                        <style>
+                            body { font-family: 'Arial', sans-serif; direction: ltr; margin: 2rem; }
+                            .header { text-align: center; border-bottom: 3px solid #b8860b; padding-bottom: 10px; margin-bottom: 20px; }
+                            h2, h3 { color: #b8860b; }
+                            table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                            th, td { border: 1px solid #b8860b; padding: 8px; text-align: center; }
+                            th { background: #fefcf6; color: #b8860b; }
+                            .alert { padding: 10px; border-radius: 10px; margin: 10px 0; }
+                            .alert-warning { background: #fff3cd; color: #856404; }
+                            .chart-container { text-align: center; margin: 20px 0; }
+                            .footer { text-align: center; margin-top: 40px; color: #888; border-top: 1px dashed #b8860b; padding-top: 10px; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <h1 style="color:#b8860b;">Farouk Danışmanlık ve İş Grubu</h1>
+                            <p>İleri Düzey Restoran Teknik Fizibilite Raporu</p>
+                            <p>Kurum: ${companyName} | Tarih: ${dateStr}</p>
+                            <p>Para Birimi: ${currency}</p>
+                        </div>
+
+                        <h2>Temel Bilgiler</h2>
+                        <table>
+                            <tr><th>Mutfak Tipi</th><td>${kitchenType}</td><th>Koltuk Sayısı</th><td>${seats}</td></tr>
+                            <tr><th>Servis Modeli</th><td>${serviceModel}</td><th>Çalışma Saati</th><td>${hoursOpen} saat/gün</td></tr>
+                            <tr><th>Çalışma Periyodu</th><td>${shifts}</td><th>Toplam Alan</th><td>${totalArea} m²</td></tr>
+                            <tr><th>Mutfak Yüzdesi</th><td>${kitchenPercent}%</td><th>Elektrik Kapasitesi</th><td>${electricalCapacity} Amper</td></tr>
+                            <tr><th>Su Kaynağı</th><td>${water}</td><th>Havalandırma</th><td>${ventilation}</td></tr>
+                            <tr><th>Teslimat Uygunluğu</th><td>${deliveryAccess}</td><th></th><td></td></tr>
+                        </table>
+
+                        <h3>Ekipmanlar</h3>
+                        <table>
+                            <thead><tr><th>Ekipman</th><th>Güç (kW)</th><th>Maliyet</th><th>Alan (m²)</th></tr></thead>
+                            <tbody>${equipmentHTML}</tbody>
+                        </table>
+
+                        <h3>Üretim Kapasitesi ve Maliyetler</h3>
+                        <table>
+                            <tr><th>Masa Dönüş Hızı</th><td>${turnoverRate}</td><th>Yoğun Saat</th><td>${peakHours}</td></tr>
+                            <tr><th>Doluluk Oranı</th><td>${occupancyRate}%</td><th>Ortalama Yemek Fiyatı</th><td>${currency} ${avgMealPrice}</td></tr>
+                            <tr><th>Yiyecek Maliyeti (%)</th><td>${foodCostPercent}%</td><th>Çalışan Sayısı</th><td>${employeesCount}</td></tr>
+                            <tr><th>Ortalama Maaş</th><td>${currency} ${avgSalary}</td><th>Aylık Kira</th><td>${currency} ${monthlyRent}</td></tr>
+                            <tr><th>Diğer Giderler</th><td>${currency} ${otherOpCost}</td><th>Ekipman Ömrü</th><td>${equipmentLife} yıl</td></tr>
+                            <tr><th>Dekorasyon Maliyeti</th><td>${currency} ${constructionCost}</td><th>Ruhsatlar</th><td>${currency} ${licensesCost}</td></tr>
+                            <tr><th>İşletme Sermayesi</th><td>${currency} ${workingCapital}</td><th></th><td></td></tr>
+                        </table>
+
+                        <h2>Temel Performans Göstergeleri</h2>
+                        <table>${kpiRows}</table>
+
+                        ${warningsHTML ? `<div class="alert alert-warning">${warningsHTML}</div>` : ''}
+
+                        <h2>Proje Değerlendirmesi</h2>
+                        <div style="border:1px solid #b8860b; border-radius:10px; padding:1rem;">${ratingHTML}</div>
+
+                        <h2>Grafikler</h2>
+                        <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                            <div style="flex:1;"><img src="${img1}" style="max-width:100%;" /></div>
+                            <div style="flex:1;"><img src="${img2}" style="max-width:100%;" /></div>
+                        </div>
+
+                        <div class="footer">Farouk Danışmanlık ve İş Grubu tarafından oluşturulmuştur - Tüm hakları saklıdır</div>
+                    </body>
+                    </html>
+                `;
+
+                const blob = new Blob(['\uFEFF' + reportHTML], { type: 'application/msword' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `Teknik_Rapor_${companyName}.doc`;
+                link.click();
+                URL.revokeObjectURL(link.href);
+            } catch (error) {
+                console.error(error);
+                alert('Word raporu oluşturulurken bir hata oluştu');
+            }
+        }
+
+        document.getElementById('exportWordBtn').addEventListener('click', exportToWord);
+
+        // Update power alert
+        updatePowerAlert();
+    </script>
+</body>
+</html>
