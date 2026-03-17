@@ -716,7 +716,7 @@
             const seatDensity = diningArea / seats;
 
             // Capacity and revenue
-            const maxCustomersDaily = seats * turnoverRate * peakHours;
+            const maxCustomersDaily = seats * turnoverRate;
             const actualCustomersDaily = maxCustomersDaily * occupancyRate;
             const monthlyRevenue = actualCustomersDaily * avgMealPrice * 26;
             const monthlyFoodCost = monthlyRevenue * foodCostPercent;
@@ -764,31 +764,39 @@
             if (totalInvestment / seats > 5000) warnings.push("💡 Koltuk başına yatırım yüksek, fizibilitesini kontrol edin");
 
             // Technical score
-            let technicalScore = 0;
-            const requiredAmps = (totalPower * 1000) / 220;
-            if (electricalCapacity >= requiredAmps * 1.2) technicalScore += 30;
-            else if (electricalCapacity >= requiredAmps) technicalScore += 25;
-            else if (electricalCapacity >= requiredAmps * 0.8) technicalScore += 15;
-            else technicalScore += 5;
+let technicalScore = 0;
+const requiredAmps = (totalPower * 1000) / 220;
 
-            if (waterAvailabilityText.includes('Uygun')) technicalScore += 10;
-            else if (waterAvailabilityText.includes('Geliştirilmeli')) technicalScore += 5;
-            if (ventilationText.includes('Uygun')) technicalScore += 10;
-            else if (ventilationText.includes('Geliştirilmeli')) technicalScore += 5;
+// 1. Elektrik Kapasitesi (Maksimum 40 puan)
+if (electricalCapacity >= requiredAmps * 1.2) technicalScore += 40;
+else if (electricalCapacity >= requiredAmps) technicalScore += 30;
+else if (electricalCapacity >= requiredAmps * 0.8) technicalScore += 15;
+else technicalScore += 5;
 
-            if (seatDensity >= 1.2 && seatDensity <= 1.8) technicalScore += 10;
-            else if (seatDensity >= 1.0 && seatDensity < 1.2) technicalScore += 5;
-            else if (seatDensity > 1.8 && seatDensity <= 2.2) technicalScore += 5;
+// 2. Su Durumu (Maksimum 15 puan)
+if (waterAvailabilityText.includes('Uygun')) technicalScore += 15;
+else if (waterAvailabilityText.includes('Geliştirilmeli')) technicalScore += 8;
 
-            if (totalSpace <= kitchenArea * 0.5) technicalScore += 10;
-            else if (totalSpace <= kitchenArea * 0.7) technicalScore += 5;
+// 3. Havalandırma Sistemi (Maksimum 15 puan)
+if (ventilationText.includes('Uygun')) technicalScore += 15;
+else if (ventilationText.includes('Geliştirilmeli')) technicalScore += 8;
 
-            technicalScore = Math.min(technicalScore, 100);
-            let technicalRating = '', technicalColor = '';
-            if (technicalScore >= 85) { technicalRating = '🟢 Mükemmel'; technicalColor = 'alert-success'; }
-            else if (technicalScore >= 70) { technicalRating = '🟡 İyi'; technicalColor = 'alert-warning'; }
-            else if (technicalScore >= 50) { technicalRating = '🟠 Orta'; technicalColor = 'alert-warning'; }
-            else { technicalRating = '🔴 Zayıf'; technicalColor = 'alert-danger'; }
+// 4. Oturma Yoğunluğu / Alan (Maksimum 15 puan)
+if (seatDensity >= 1.2 && seatDensity <= 1.8) technicalScore += 15;
+else if (seatDensity >= 1.0 && seatDensity < 1.2) technicalScore += 8;
+else if (seatDensity > 1.8 && seatDensity <= 2.2) technicalScore += 8;
+
+// 5. Ekipman Alanı (Maksimum 15 puan)
+if (totalSpace <= kitchenArea * 0.5) technicalScore += 15;
+else if (totalSpace <= kitchenArea * 0.7) technicalScore += 8;
+
+technicalScore = Math.min(technicalScore, 100);
+
+let technicalRating = '', technicalColor = '';
+if (technicalScore >= 85) { technicalRating = '🟢 Mükemmel'; technicalColor = 'alert-success'; }
+else if (technicalScore >= 70) { technicalRating = '🟡 İyi'; technicalColor = 'alert-warning'; }
+else if (technicalScore >= 50) { technicalRating = '🟠 Orta'; technicalColor = 'alert-warning'; }
+else { technicalRating = '🔴 Zayıf'; technicalColor = 'alert-danger'; }
 
             // Financial score
             let financialScore = 0;
