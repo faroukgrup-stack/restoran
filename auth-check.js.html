@@ -1,0 +1,13 @@
+// auth-check.js - Restoran araçlarında oturum kontrolü (token olmadan)
+(function() {
+    const loggedIn = localStorage.getItem('restaurantLoggedIn') === 'true';
+    const userName = localStorage.getItem('userName');
+
+    if (!loggedIn || !userName) {
+        alert("Bu araca erişmek için lütfen önce giriş yapın.");
+        window.location.href = "index.html";
+        return;
+    }
+
+    console.log("✅ Araç erişimi onaylandı");
+})();
