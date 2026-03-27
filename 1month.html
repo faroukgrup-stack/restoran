@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <title>Abonelik Aktivasyonu - Farouk Grup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0b0e17; color: white;
+            display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;
+        }
+        .reg-card {
+            background: rgba(18, 24, 36, 0.9);
+            padding: 40px; border-radius: 20px;
+            border: 1px solid rgba(255,215,0,0.3);
+            width: 100%; max-width: 450px; text-align: center;
+        }
+        input {
+            width: 100%; padding: 12px; margin: 10px 0;
+            background: rgba(255,255,255,0.05); border: 1px solid #333;
+            color: white; border-radius: 8px; font-family: inherit;
+        }
+        input[readonly] { background: rgba(255,255,255,0.02); color: #aaa; cursor: not-allowed; }
+        button {
+            width: 100%; padding: 15px; margin-top: 20px;
+            background: linear-gradient(135deg, #d4af37, #aa8a2e);
+            border: none; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer;
+        }
+        .success-msg { color: #4bb543; display: none; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="reg-card">
+    <i class="fas fa-user-plus" style="font-size: 3rem; color: #d4af37; margin-bottom: 20px;"></i>
+    <h2>Abone Hesabı Aktivasyonu</h2>
+    <p>Lütfen giriş bilgilerinizi girin</p>
+
+    <form id="registrationForm">
+        <input type="text" name="fullName" placeholder="Tam Ad" required>
+        
+        <!-- E-posta alanı, normal kullanıcı adı yerine -->
+        <input type="email" name="username" placeholder="Abonelik ödemesinde kullanılan e-posta adresi (örn. isim@domain.com)" required inputmode="email">
+        
+        <input type="password" name="password" placeholder="Şifre (İngilizce karakterler)" required>
+        
+        <label style="display:block; text-align:left; font-size: 0.8rem; margin-top: 10px; color: #d4af37;">Abonelik bitiş tarihi (otomatik):</label>
+        <input type="text" id="expiryDisplay" readonly>
+        
+        <input type="hidden" name="duration" value="1">
+        <button type="submit" id="regBtn">Hesabı Şimdi Aktifleştir</button>
+    </form>
+    <div id="msg" class="success-msg">Hesabınız aktifleştirildi! Yönlendiriliyorsunuz...</div>
+</div>
+
+<script>
+    // Bir ay sonrasını hesapla ve göster
+    const nextMonth = new Date();
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    document.getElementById('expiryDisplay').value = nextMonth.toISOString().split('T')[0];
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzKfhyxsOq5s0vI-Ps7i4nJ6mCdCnWKfqr5xIgqUs92gWKKXeaVp7GynMbegh9DZqDP/exec';
+
+    document.getElementById('registrationForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const btn = document.getElementById('regBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Bağlanıyor...';
+
+        const formData = new FormData(e.target);
+        formData.append('action', 'register');
+
+        fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors'})
+        .then(() => {
+            document.getElementById('msg').style.display = 'block';
+            setTimeout(() => {
+                window.location.href = 'https://portal.farouk-grup.com/';
+            }, 3000);
+        })
+        .catch(error => {
+            alert('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
+            btn.disabled = false;
+        });
+    });
+</script>
+
+</body>
+</html>
