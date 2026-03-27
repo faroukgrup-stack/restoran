@@ -1,0 +1,37 @@
+// auth.js - Geliştirilmiş ve yeni token sistemiyle uyumlu
+(function() {
+    // 1. localStorage'dan verileri al (diğer dosyada da kullandığımız gibi)
+    const token = localStorage.getItem('userToken');
+    const user = localStorage.getItem('userName');
+    const SECRET_KEY = "F@roukGrup_S3cur3_K3y_2026!";
+
+    let isValid = false;
+
+    try {
+        if (token && user) {
+            // Token'ı çöz ve doğruluğunu kontrol et
+            const decoded = atob(token);
+            const parts = decoded.split('|');
+            
+            // Gizli anahtar ve kullanıcı adını kontrol et
+            if (parts.length === 3 && parts[0] === SECRET_KEY && parts[1] === user) {
+                isValid = true;
+            }
+        }
+    } catch (e) {
+        isValid = false;
+    }
+
+    // 2. Geçersiz ise giriş sayfasına yönlendir
+    if (!isValid) {
+        console.warn("Erişim reddedildi: Geçersiz veya eksik token.");
+        window.location.href = "index.html";
+        return;
+    }
+
+    // 3. Geçerli ise sayfa yüklendiğinde kullanıcı adını göster
+    window.addEventListener('DOMContentLoaded', () => {
+        const nameElement = document.getElementById('displayUserName');
+        if (nameElement) nameElement.innerText = user;
+    });
+})();

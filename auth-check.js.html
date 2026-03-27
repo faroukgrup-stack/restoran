@@ -1,0 +1,28 @@
+(function() {
+    const token = localStorage.getItem('userToken');
+    const userName = localStorage.getItem('userName');
+
+    if (!token || !userName) {
+        alert("Bu araca erişmek için lütfen önce giriş yapın.");
+        window.location.href = "index.html";
+        return;
+    }
+
+    // Temel doğrulama: token en azından doğru şekilde kodlanmış görünüyor mu?
+    try {
+        const decoded = atob(token);
+        if (decoded.split('|').length !== 3) {
+            throw new Error("Geçersiz format");
+        }
+    } catch(e) {
+        console.warn("Token doğrulaması başarısız:", e);
+        alert("Geçersiz oturum, lütfen tekrar giriş yapın.");
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('daysLeft');
+        window.location.href = "index.html";
+        return;
+    }
+
+    console.log("✅ Araç erişimi onaylandı");
+})();

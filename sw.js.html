@@ -1,0 +1,50 @@
+// 1. Siteyi her düzenlediğinizde sürüm numarasını burada değiştirin (v1, v2, v3...)
+const CACHE_NAME = 'fg-store-v3'; 
+
+const ASSETS = [
+  '/',
+  '/index.html',
+  // Buraya çevrimdışı çalışmasını istediğiniz tüm CSS veya temel görselleri ekleyin
+];
+
+// Yükleme aşaması: dosyaları önbelleğe al
+self.addEventListener('install', (e) => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('Yeni önbellek sürümü yükleniyor...');
+      return cache.addAll(ASSETS);
+    }).then(() => {
+      // Yeni Service Worker'ı tarayıcı kapatılana beklemeden hemen etkinleştir
+      return self.skipWaiting();
+    })
+  );
+});
+
+// Etkinleştirme aşaması: eski önbellekleri tamamen sil (sorununuzun çözümü)
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            console.log('Eski önbellek siliniyor:', cache);
+            return caches.delete(cache);
+          }
+        })
+      );
+    }).then(() => {
+      // Tüm açık sekmelerin yeni Service Worker tarafından hemen kontrol edilmesini sağla
+      return self.clients.claim();
+    })
+  );
+});
+
+// Yanıt stratejisi: önce internetten getirmeyi dene, başarısız olursa (çevrimdışı) önbellekten al
+// Bu strateji (Network First) değişken hesaplamaları olan bir danışmanlık sitesi için en uygunudur
+self.addEventListener('fetch', (e) => {
+  e.respondWith(
+    fetch(e.request).catch(() => {
+      return caches.match(e.request);
+    })
+  );
+});

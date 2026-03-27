@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
+<title>Kapsamlı Finansal Fizibilite Çalışması | FAROUK GRUP</title>
+<!-- Sayfa koruması -->
+    <script src="auth-check.js"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<!-- Chart.js & html2canvas -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg-dark: #0b0e17;
+    --bg-panel: rgba(18, 24, 36, 0.85);
+    --bg-card: rgba(22, 30, 46, 0.8);
+    --border-light: rgba(180, 133, 84, 0.25);
+    --accent-glow: #b48554;
+    --accent-soft: #cfa776;
+    --text-light: #f0f4fa;
+    --text-muted: #aab7d4;
+    --text-dark: #0b0e17;
+    --shadow-soft: 0 15px 35px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(180, 133, 84, 0.15);
+    --shadow-glow: 0 15px 35px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(180, 133, 84, 0.3);
+    --radius-md: 20px;
+    --radius-lg: 30px;
+    --transition: all 0.3s ease;
+    --gold: #b8860b;
+    --gold-light: #d4b15a;
+    --gold-soft: rgba(184,134,11,0.1);
+    --dark: #0f0f0f;
+    --dark-light: #1a1a1a;
+    --white: #ffffff;
+    --offwhite: #f9f9f9;
+    --text: #333;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: radial-gradient(circle at 70% 30%, #141c2b, #0a0e16);
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Arka plan parlaklığı */
+.glow-bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+.glow-bg span {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(180,133,84,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: glowMove 20s infinite alternate ease-in-out;
+}
+.glow-bg span:nth-child(1) { top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(180,133,84,0.12) 0%, transparent 70%); }
+.glow-bg span:nth-child(2) { bottom: -150px; left: -150px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(100,150,200,0.1) 0%, transparent 70%); }
+.glow-bg span:nth-child(3) { top: 30%; left: 30%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(180,133,84,0.1) 0%, transparent 70%); animation-delay: -5s; }
+
+@keyframes glowMove {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+    100% { transform: translate(40px, -30px) scale(1.2); opacity: 0.8; }
+}
+
+.floating-shape {
+    position: absolute;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,134,11,0.1) 0%, transparent 70%);
+    z-index: 0; pointer-events: none;
+}
+.shape-1 { top: -100px; right: -100px; animation: float 20s infinite ease-in-out; }
+.shape-2 { bottom: -50px; left: -50px; width: 200px; height: 200px; animation: float 15s infinite ease-in-out reverse; }
+@keyframes float {
+    0% { transform: translate(0,0) rotate(0deg); }
+    33% { transform: translate(30px,-30px) rotate(5deg); }
+    66% { transform: translate(-20px,20px) rotate(-5deg); }
+    100% { transform: translate(0,0) rotate(0deg); }
+}
+
+/* NAV tamamen kaldırıldı */
+
+.hero-mini {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+    color: white; text-align: center; padding: 3rem 1rem;
+    border-bottom: 4px solid var(--gold); position: relative; overflow: hidden;
+}
+.hero-mini::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(184,134,11,0.2) 0%, transparent 60%);
+    animation: rotate 40s linear infinite;
+}
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.hero-mini h2 { font-size: 2.5rem; font-weight: 900; color: var(--gold-light); margin-bottom: 0.5rem; position: relative; z-index: 2; }
+.hero-mini p { font-size: 1.2rem; max-width: 700px; margin: 0 auto; opacity: 0.95; position: relative; z-index: 2; }
+
+.calc-wrapper {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Ana kart */
+.calc-box {
+    background: var(--bg-panel);
+    backdrop-filter: blur(15px);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+}
+.calc-box:hover {
+    box-shadow: var(--shadow-glow);
+    border-color: rgba(180,133,84,0.4);
+}
+.calc-box h2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #f0e6d2, #cfa776);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.featured-badge {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: linear-gradient(135deg, var(--accent-glow), var(--gold-light));
+    color: #111;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    font-weight: 900;
+    border: 3px solid white;
+    z-index: 10;
+}
+.featured-badge i { font-size: 1.8rem; margin-bottom: 0.2rem; color: #0b0e17; }
+.featured-badge span { font-size: 0.8rem; text-align: center; color: #0b0e17; }
+
+.currency-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(180,133,84,0.15);
+    border: 1px solid var(--border-light);
+    padding: 0.8rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+.currency-row label { font-weight: 700; color: var(--accent-soft); margin: 0; }
+.currency-row select, .currency-row input {
+    width: 150px;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--border-light);
+    border-radius: 30px;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 700;
+    background: rgba(10,14,23,0.7);
+    color: var(--text-light);
+}
+.currency-row input { width: 250px; }
+.currency-row select option { background: #0b0e17; color: #f0f4fa; }
+
+.section-title-sm {
+    font-size: 1.3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #f0e6d2, #cfd9ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 1.2rem 0 0.8rem 0;
+    border-bottom: 2px solid var(--border-light);
+    padding-bottom: 0.3rem;
+}
+.form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.form-group { flex: 1 1 200px; margin-bottom: 0.8rem; position: relative; }
+label { display: block; margin-bottom: 0.3rem; font-weight: 700; color: var(--accent-soft); font-size: 0.9rem; }
+label i { color: var(--accent-soft); margin-left: 0.3rem; }
+input, select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-light);
+    border-radius: 30px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    background: rgba(10,14,23,0.7);
+    color: var(--text-light);
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-glow);
+    box-shadow: 0 0 0 3px rgba(180,133,84,0.2);
+    background: rgba(15,20,30,0.9);
+}
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 220px;
+    background-color: var(--dark);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 100;
+    bottom: 130%; left: 50%;
+    margin-left: -110px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.85rem;
+    border: 1px solid var(--gold);
+    pointer-events: none;
+}
+.tooltip .tooltiptext::after {
+    content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px;
+    border-width: 5px; border-style: solid; border-color: var(--dark) transparent transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+.btn-calculate {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    width: 100%; padding: 1.2rem; border-radius: 50px;
+    background: rgba(180,133,84,0.2);
+    border: 1px solid var(--border-light);
+    color: var(--accent-soft);
+    font-weight: 900; font-size: 1.2rem; cursor: pointer;
+    transition: var(--transition); backdrop-filter: blur(10px); margin: 1.5rem 0;
+}
+.btn-calculate:hover {
+    background: rgba(180,133,84,0.4);
+    color: #fff; border-color: var(--accent-glow);
+    box-shadow: 0 0 25px rgba(180,133,84,0.3);
+    transform: translateY(-3px);
+}
+.results-section { margin-top: 2rem; }
+.results-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem; margin-bottom: 1.5rem;
+}
+.result-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 1.2rem; text-align: center;
+    box-shadow: var(--shadow-soft); transition: var(--transition);
+}
+.result-card:hover {
+    transform: translateY(-5px); border-color: var(--accent-glow);
+    box-shadow: var(--shadow-glow);
+}
+.result-card i { font-size: 1.8rem; color: var(--accent-soft); margin-bottom: 0.5rem; }
+.result-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+.result-card .value { font-size: 1.4rem; font-weight: 900; color: var(--accent-soft); }
+.result-card .unit { font-size: 0.8rem; color: var(--text-muted); margin-left: 0.2rem; }
+.result-card .status {
+    font-size: 0.8rem; margin-top: 0.3rem; padding: 0.2rem 0.5rem; border-radius: 20px; display: inline-block;
+}
+.status-good { background: var(--success); color: white; }
+.status-bad { background: var(--danger); color: white; }
+.status-warning { background: var(--warning); color: #111; }
+
+.table-container {
+    overflow-x: auto; margin-top: 1.5rem; border: 1px solid var(--border-light);
+    border-radius: var(--radius-md); background: var(--bg-card); padding: 0.8rem;
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th {
+    background: rgba(180,133,84,0.2); color: var(--accent-soft);
+    font-weight: 900; padding: 0.5rem; border-bottom: 2px solid var(--border-light);
+}
+td { padding: 0.5rem; border-bottom: 1px solid rgba(180,133,84,0.2); text-align: center; color: var(--text-light); }
+tr:last-child td { border-bottom: none; }
+.positive { color: #4ade80; font-weight: 700; }
+.negative { color: #f87171; font-weight: 700; }
+
+.export-container {
+    display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin: 1.5rem 0;
+}
+.export-btn, .export-word-btn {
+    background: rgba(180,133,84,0.15);
+    border: 1px solid var(--border-light); border-radius: 40px; padding: 0.8rem 1.5rem;
+    color: var(--accent-soft); font-weight: 700; cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;
+}
+.export-btn:hover, .export-word-btn:hover {
+    background: rgba(180,133,84,0.3); color: #fff;
+    border-color: var(--accent-glow); box-shadow: 0 0 15px rgba(180,133,84,0.3);
+}
+
+.charts-container {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; margin: 2rem 0;
+}
+.chart-card {
+    background: var(--bg-card); border: 1px solid var(--border-light);
+    border-radius: var(--radius-md); padding: 1rem;
+}
+.chart-card h3 { color: var(--accent-soft); font-size: 1rem; margin-bottom: 0.8rem; text-align: center; }
+canvas { width: 100% !important; height: auto !important; max-height: 250px; }
+
+.scenario-container {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem; margin: 1rem 0;
+}
+.scenario-card {
+    background: var(--bg-card); border: 2px solid; border-radius: var(--radius-md); padding: 1rem; text-align: center;
+}
+.scenario-card.pessimistic { border-color: var(--danger); }
+.scenario-card.expected { border-color: var(--warning); }
+.scenario-card.optimistic { border-color: var(--success); }
+.scenario-card h4 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--accent-soft); }
+.scenario-card .value { font-size: 1.2rem; font-weight: 900; color: var(--accent-soft); }
+.scenario-card .label { color: var(--text-muted); font-size: 0.8rem; }
+
+/* Basit footer */
+.footer-simple {
+    text-align: center; padding: 1.5rem; margin-top: 2rem;
+    background: rgba(10,14,23,0.5); backdrop-filter: blur(5px);
+    border-top: 1px solid var(--border-light); color: var(--text-muted); font-size: 0.85rem;
+}
+.footer-simple span { color: var(--accent-soft); font-weight: 700; }
+
+/* Hesap makinesi modal (kimlikle uyumlu) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(4px);
+}
+.modal-content {
+    background: var(--bg-panel);
+    margin: 5% auto;
+    padding: 0;
+    border: 2px solid var(--border-light);
+    border-radius: 30px;
+    width: 90%;
+    max-width: 300px;
+    box-shadow: var(--shadow-glow);
+}
+.modal-header {
+    background: rgba(180,133,84,0.15);
+    border-bottom: 2px solid var(--border-light);
+    padding: 10px 15px;
+    border-radius: 28px 28px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.modal-header h2 {
+    margin: 0;
+    color: var(--accent-soft);
+    font-size: 1rem;
+    font-weight: 900;
+}
+.close {
+    color: var(--text-muted);
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close:hover { color: var(--accent-glow); }
+.modal-body { padding: 15px; }
+.calc-display {
+    width: 100%;
+    height: 45px;
+    font-size: 1.4rem;
+    text-align: left;
+    padding: 0 10px;
+    border: 2px solid var(--border-light);
+    border-radius: 20px;
+    margin-bottom: 15px;
+    background: rgba(10,14,23,0.8);
+    color: var(--accent-soft);
+    font-family: 'Inter', monospace;
+    direction: ltr;
+}
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+.calc-btn {
+    background: rgba(180,133,84,0.1);
+    border: 1px solid var(--border-light);
+    border-radius: 15px;
+    padding: 10px 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-light);
+    cursor: pointer;
+}
+.calc-btn:hover {
+    background: rgba(180,133,84,0.3);
+    border-color: var(--accent-glow);
+}
+.calc-btn.operator { color: var(--accent-soft); }
+.calc-btn.equals {
+    background: rgba(180,133,84,0.3);
+    color: white;
+    grid-column: span 2;
+}
+.calc-btn.equals:hover { background: rgba(180,133,84,0.5); }
+
+/* Yüzer hesap makinesi butonu */
+.calc-floating-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(180,133,84,0.2);
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    padding: 0.8rem 1.2rem;
+    color: var(--accent-soft);
+    font-size: 1rem;
+    font-weight: 700;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.calc-floating-btn:hover {
+    background: rgba(180,133,84,0.4);
+    color: #fff;
+    border-color: var(--accent-glow);
+    box-shadow: 0 0 15px rgba(180,133,84,0.3);
+}
+
+/* Mobil iyileştirmeler */
+@media (max-width: 768px) {
+    .hero-mini h2 { font-size: 2rem; }
+    .hero-mini p { font-size: 1rem; }
+    .calc-box { padding: 1.5rem; }
+    .featured-badge { width: 70px; height: 70px; }
+    .featured-badge i { font-size: 1.4rem; }
+    .featured-badge span { font-size: 0.6rem; }
+    .currency-row select, .currency-row input { width: 100%; }
+    .charts-container { grid-template-columns: 1fr; }
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<body style="overflow-x: hidden;">
+<!-- Arka plan parlaklığı -->
+<div class="glow-bg">
+    <span></span><span></span><span></span>
+</div>
+<div class="floating-shape shape-1"></div>
+<div class="floating-shape shape-2"></div>
+
+<!-- NAV tamamen kaldırıldı -->
+
+<section class="hero-mini">
+    <h2>Kapsamlı Finansal Fizibilite Çalışması</h2>
+    <p>Entegre analiz – İşletme sermayesi, yatırım değerlemesi, göstergeler, başabaş noktası</p>
+</section>
+
+<section class="calc-wrapper">
+    <div class="calc-box" data-aos="fade-up">
+        <div class="featured-badge">
+            <i class="fas fa-chart-pie"></i>
+            <span>Fizibilite</span>
+        </div>
+        <h2>Projenin Temel Verileri</h2>
+
+        <!-- Para birimi ve kurum adı -->
+        <div class="currency-row">
+            <label><i class="fas fa-coins"></i> Para Birimi:</label>
+            <select id="currencySelect">
+                <option value="$" selected>Dolar ($)</option>
+                <option value="€">Euro (€)</option>
+                <option value="₺">Türk Lirası (₺)</option>
+                <option value="ج.م">Mısır Poundu (ج.م)</option>
+                <option value="د.ك">Kuveyt Dinarı (د.ك)</option>
+                <option value="ر.س">Suudi Riyali (ر.س)</option>
+            </select>
+            <label><i class="fas fa-building"></i> Kurum Adı:</label>
+            <input type="text" id="companyName" value="Rapordan Yararlanan Kurum Adı" placeholder="Kurum Adı">
+        </div>
+
+        <!-- Sermaye -->
+        <div class="section-title-sm">💰 Yatırılan Sermaye (İşletme Sermayesi Öncesi)</div>
+        <div class="form-row">
+            <div class="form-group tooltip">
+                <label><i class="fas fa-building"></i> Sabit Sermaye</label>
+                <input type="number" id="fixedCapital" value="150000" step="1000">
+                <span class="tooltiptext">Amortismana tabi sabit kıymetler (makine, ekipman, bina).</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-file-invoice"></i> Kuruluş Sermayesi</label>
+                <input type="number" id="setupCapital" value="100000" step="1000">
+                <span class="tooltiptext">Faaliyet öncesi giderler (araştırma, lisanslar vb.).</span>
+            </div>
+        </div>
+
+        <!-- İşletme sermayesi için aylık gider detayları -->
+        <div class="section-title-sm">📆 İşletme Sermayesi Verileri (Aylık)</div>
+        <div class="form-row">
+            <div class="form-group tooltip">
+                <label><i class="fas fa-chart-line"></i> Aylık Nakit Satışlar</label>
+                <input type="number" id="monthlySales" value="220000" step="1000">
+                <span class="tooltiptext">Ortalama aylık nakit satış (ilk yıl için sabit kabul edilir).</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-users"></i> Çalışan Sayısı</label>
+                <input type="number" id="employees" value="2" step="1">
+                <span class="tooltiptext">Çalışan sayısı (maaş hesaplamada kullanılır).</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-user-tie"></i> Ortalama Aylık Net Maaş</label>
+                <input type="number" id="netSalary" value="30000" step="1000">
+                <span class="tooltiptext">Çalışan başı aylık net maaş.</span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group tooltip">
+                <label><i class="fas fa-hand-holding-usd"></i> Çalışan Maliyet Katsayısı (Ek Ödemeler+Sigorta)</label>
+                <input type="number" id="salaryBurden" value="1.61" step="0.01">
+                <span class="tooltiptext">Net maaşı fiili maliyete çeviren katsayı (ör. 1.61).</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-store"></i> Aylık Net Kira</label>
+                <input type="number" id="netRent" value="50000" step="1000">
+                <span class="tooltiptext">Aylık ödenen net kira bedeli.</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-percent"></i> Kira Katma Değer Vergisi Oranı (%)</label>
+                <input type="number" id="rentTax" value="20" step="1">
+                <span class="tooltiptext">Kira üzerindeki KDV oranı (ör. 20%).</span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group tooltip">
+                <label><i class="fas fa-percent"></i> Toplam Değişken Maliyet Oranı (% satış)</label>
+                <input type="number" id="totalVariableCostPercent" value="0.3" step="0.01" min="0" max="1">
+                <span class="tooltiptext">Satışlar içindeki değişken maliyetlerin oranı (hammadde, komisyonlar, ambalaj vb.).</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-tools"></i> Aylık Sabit Operasyonel Giderler</label>
+                <input type="number" id="opexMonthly" value="15000" step="1000">
+                <span class="tooltiptext">Aylık sabit işletme giderleri (elektrik, internet vb.).</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-piggy-bank"></i> Aylık Nakit Rezerv</label>
+                <input type="number" id="cashReserve" value="7000" step="1000">
+                <span class="tooltiptext">Aylık olarak ayrılan nakit rezerv (sadece işletme sermayesini etkiler).</span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group tooltip">
+                <label><i class="fas fa-clock"></i> İşletme Sermayesi Karşılama Ayı</label>
+                <input type="number" id="wcMonths" value="3" step="1" min="0">
+                <span class="tooltiptext">Nakit olarak karşılanması gereken sabit gider ay sayısı (işletme sermayesi).</span>
+            </div>
+        </div>
+
+        <!-- Büyüme ve iskonto varsayımları -->
+        <div class="section-title-sm">📈 Büyüme ve Değerleme Varsayımları</div>
+        <div class="form-row">
+            <div class="form-group tooltip">
+                <label><i class="fas fa-arrow-up"></i> Yıllık Satış Büyümesi (%)</label>
+                <input type="number" id="growthRate" value="10" step="0.1">
+                <span class="tooltiptext">Yıllık gelir büyüme oranı (ör. %10).</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-arrow-down"></i> Yıllık Gider Büyümesi (%)</label>
+                <input type="number" id="expGrowth" value="5" step="0.1">
+                <span class="tooltiptext">Yıllık sabit gider büyüme oranı (enflasyon).</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-percent"></i> İskonto Oranı (WACC) (%)</label>
+                <input type="number" id="discountRate" value="10" step="0.1">
+                <span class="tooltiptext">Sermaye maliyeti veya istenen getiri oranı.</span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group tooltip">
+                <label><i class="fas fa-percent"></i> Kurumlar Vergisi Oranı (%)</label>
+                <input type="number" id="taxRate" value="25" step="0.1">
+                <span class="tooltiptext">Kâr üzerinden alınan vergi oranı.</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-calendar-alt"></i> Ekonomik Ömür (Yıl)</label>
+                <input type="number" id="lifeYears" value="8" step="1" min="1" max="20">
+                <span class="tooltiptext">Sabit varlıkların amortisman süresi.</span>
+            </div>
+        </div>
+
+        <!-- Başabaş noktası verileri -->
+        <div class="section-title-sm">⚖️ Başabaş Noktası Verileri</div>
+        <div class="form-row">
+            <div class="form-group tooltip">
+                <label><i class="fas fa-dollar-sign"></i> Birim Satış Fiyatı</label>
+                <input type="number" id="pricePerUnit" value="6500" step="10">
+                <span class="tooltiptext">Bir ürünün satış fiyatı.</span>
+            </div>
+        </div>
+
+        <!-- Ek göstergeler -->
+        <div class="section-title-sm">📊 Ek Göstergeler</div>
+        <div class="form-row">
+            <div class="form-group tooltip">
+                <label><i class="fas fa-percent"></i> Yeniden Yatırım Oranı (MIRR) (%)</label>
+                <input type="number" id="reinvestRate" value="10" step="0.1">
+                <span class="tooltiptext">Nakit akışlarının yeniden yatırılabileceği oran.</span>
+            </div>
+            <div class="form-group tooltip">
+                <label><i class="fas fa-hand-holding-usd"></i> Yıllık Borç Servisi (Opsiyonel)</label>
+                <input type="number" id="debtService" value="0" step="1000">
+                <span class="tooltiptext">Yıllık kredi taksitleri (DSCR hesaplaması için).</span>
+            </div>
+        </div>
+
+        <button class="btn-calculate" id="calculateBtn"><i class="fas fa-calculator"></i> Fizibilite ve Göstergeleri Hesapla</button>
+
+        <!-- Sonuç bölümü -->
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="results-cards" id="kpiCards"></div>
+
+            <!-- Proje değerlendirme kartı -->
+            <div class="result-card" id="projectScore" style="margin-bottom:2rem;"></div>
+
+            <!-- Grafikler -->
+            <div class="section-title-sm">📊 Grafikler</div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3>Yıllık Nakit Akışları</h3>
+                    <canvas id="cashFlowChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>NPV Eğrisi (İskonto Duyarlılığı)</h3>
+                    <canvas id="npvCurveChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Gelir vs Giderler</h3>
+                    <canvas id="revExpChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Başabaş Noktası</h3>
+                    <canvas id="breakevenChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Nakit akışları tablosu -->
+            <div class="section-title-sm">📋 Beklenen Nakit Akışları</div>
+            <div class="table-container" id="cashFlowTable"></div>
+
+            <!-- Dışa aktarma butonları -->
+            <div class="export-container">
+                <button class="export-btn" id="exportExcelBtn"><i class="fas fa-file-excel"></i> Tabloyu Excel'e Aktar</button>
+                <button class="export-word-btn" id="exportWordBtn"><i class="fas fa-file-word"></i> Tam Raporu Word'e Aktar</button>
+            </div>
+
+            <!-- Risk analizi verileri -->
+            <div class="section-title-sm">📋 Risk Analizi Verileri (Duyarlılık Analizi İçin)</div>
+            <div class="result-card" id="riskDataCard" style="text-align:left; padding:1.5rem;">
+                <div id="riskDataText"></div>
+            </div>
+
+            <!-- Başabaş noktası analizi -->
+            <div class="section-title-sm">🎯 Başabaş Noktası (Nakit Akışları ile Uyumlu)</div>
+            <div class="result-card" id="breakevenCard" style="text-align:left; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;"></div>
+
+            <!-- Senaryo analizi -->
+            <div class="section-title-sm">🔮 Senaryo Analizi</div>
+            <div class="scenario-container" id="scenarioContainer"></div>
+
+            <!-- Duyarlılık analizi bölümü -->
+            <div class="section-title-sm">🔍 Duyarlılık Analizi (Tek Yönlü)</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-sliders-h"></i> Analiz Edilecek Değişken</label>
+                    <select id="sensitivityVar">
+                        <option value="monthlySales">Aylık Satışlar</option>
+                        <option value="fixedCosts">Sabit Maliyetler (Maaş+Kira+Giderler)</option>
+                        <option value="totalVariableCostPercent">Değişken Maliyet Oranı</option>
+                        <option value="discountRate">İskonto Oranı</option>
+                        <option value="growthRate">Satış Büyümesi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-percent"></i> Değişim Aralığı (±%)</label>
+                    <input type="number" id="sensitivityRange" value="20" min="5" max="100" step="5">
+                </div>
+                <div class="form-group" style="display: flex; align-items: flex-end;">
+                    <button class="btn-calculate" id="runSensitivity" style="margin:0; padding:0.8rem 2rem;"><i class="fas fa-chart-line"></i> Çalıştır</button>
+                </div>
+            </div>
+            <div id="sensitivityResults" style="margin-top:1rem; overflow-x:auto;"></div>
+        </div>
+
+        <div id="initialMessage" style="margin-top:1rem; color:var(--text-muted); text-align:center;">
+            <i class="fas fa-robot" style="color: var(--accent-soft);"></i> Sonuçlar hesaplama butonuna bastıktan sonra görüntülenecektir.
+        </div>
+    </div>
+</section>
+
+<!-- Basit footer -->
+<footer class="footer-simple">
+    Tüm Hakları Saklıdır © 2026 <span>FAROUK GRUP</span>
+</footer>
+
+<!-- Yüzer hesap makinesi butonu (nav alternatifi) -->
+<div class="calc-floating-btn" id="calculatorBtn">
+    <i class="fas fa-calculator"></i> Hesap Makinesi
+</div>
+
+<!-- Hesap Makinesi Modal -->
+<div id="calculatorModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-calculator" style="color: var(--accent-soft);"></i> Hesap Makinesi</h2>
+        </div>
+        <div class="modal-body">
+            <input type="text" id="calcDisplay" class="calc-display" readonly>
+            <div class="calc-buttons">
+                    <!-- 1. satır -->
+                    <button class="calc-btn" onclick="handleCalculatorInput('7')">7</button>
+                    <button class="calc-btn" onclick="handleCalculatorInput('8')">8</button>
+                    <button class="calc-btn" onclick="handleCalculatorInput('9')">9</button>
+                    <button class="calc-btn operator" onclick="handleCalculatorInput('/')">÷</button>
+
+                    <!-- 2. satır -->
+                    <button class="calc-btn" onclick="handleCalculatorInput('4')">4</button>
+                    <button class="calc-btn" onclick="handleCalculatorInput('5')">5</button>
+                    <button class="calc-btn" onclick="handleCalculatorInput('6')">6</button>
+                    <button class="calc-btn operator" onclick="handleCalculatorInput('*')">×</button>
+
+                    <!-- 3. satır -->
+                    <button class="calc-btn" onclick="handleCalculatorInput('1')">1</button>
+                    <button class="calc-btn" onclick="handleCalculatorInput('2')">2</button>
+                    <button class="calc-btn" onclick="handleCalculatorInput('3')">3</button>
+                    <button class="calc-btn operator" onclick="handleCalculatorInput('-')">-</button>
+
+                    <!-- 4. satır -->
+                    <button class="calc-btn" onclick="clearCalculator()">C</button>
+                    <button class="calc-btn" onclick="handleCalculatorInput('.')">.</button>
+                    <button class="calc-btn" onclick="handleCalculatorInput('0')">0</button>
+                    <button class="calc-btn operator" onclick="handleCalculatorInput('+')">+</button>
+
+                    <!-- 5. satır -->
+                    <button class="calc-btn" onclick="backspaceCalculator()">⌫</button>
+                    <button class="calc-btn equals" onclick="calculateCalculatorResult()" style="grid-column: span 3;">=</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 800, once: true, offset: 100 });
+
+// ========== Tüm hesaplama ve finansal fonksiyonlar orijinal haliyle (sadece dil değişti) ==========
+
+function exportToExcel() {
+    const table = document.querySelector('#cashFlowTable table');
+    if (!table) { alert('Dışa aktarılacak tablo yok.'); return; }
+    const rows = [];
+    const headers = [];
+    table.querySelectorAll('thead th').forEach(th => headers.push(th.innerText));
+    rows.push(headers);
+    table.querySelectorAll('tbody tr').forEach(tr => {
+        const row = [];
+        tr.querySelectorAll('td').forEach(td => row.push(td.innerText));
+        rows.push(row);
+    });
+    let csvContent = rows.map(row => row.map(cell => (cell.includes(',') ? `"${cell}"` : cell)).join(',')).join('\n');
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const now = new Date(); const dateStr = now.toISOString().slice(0,10).replace(/-/g,'');
+    link.download = `Fizibilite_${dateStr}.csv`;
+    link.href = URL.createObjectURL(blob); link.click();
+}
+
+async function exportToWord() {
+    const currency = document.getElementById('currencySelect').value;
+    const companyName = document.getElementById('companyName').value || 'Kurum Adı';
+    if (document.getElementById('resultsSection').style.display === 'none') { alert('Lütfen önce analizi yapın.'); return; }
+    try {
+        const chartCanvases = document.querySelectorAll('.chart-card canvas');
+        const chartImages = [];
+        for (let canvas of chartCanvases) {
+            try { const img = await html2canvas(canvas, { scale: 2, backgroundColor: '#ffffff' }); chartImages.push(img.toDataURL('image/png')); } catch { chartImages.push(''); }
+        }
+
+        const kpiCards = document.querySelectorAll('.result-card');
+        let kpiTableRows = ''; let row = ''; let count = 0;
+        kpiCards.forEach((card, index) => {
+            const icon = card.querySelector('i') ? card.querySelector('i').outerHTML : '';
+            const title = card.querySelector('h4') ? card.querySelector('h4').innerText : '';
+            const value = card.querySelector('.value') ? card.querySelector('.value').innerText : '';
+            const unit = card.querySelector('.unit') ? card.querySelector('.unit').innerText : '';
+            const status = card.querySelector('.status') ? card.querySelector('.status').outerHTML : '';
+            const cell = `<td style="border:1px solid #b8860b; padding:15px; text-align:center; background-color:#fefcf6; width:50%;">${icon}<h4 style="margin:0.5rem 0; color:#666;">${title}</h4><div style="font-size:1.8rem; font-weight:900; color:#b8860b;">${value}</div><div style="font-size:0.9rem; color:#777;">${unit}</div>${status ? status.replace(/class="status/g, 'style="margin-top:0.3rem; padding:0.2rem 0.5rem; border-radius:20px; display:inline-block;') : ''} </td>`;
+            row += cell; count++;
+            if (count % 2 === 0 || index === kpiCards.length - 1) { kpiTableRows += `</td>${row} </table`; row = ''; }
+        });
+
+        const projectScoreHTML = document.getElementById('projectScore').innerHTML;
+        const tableHTML = document.querySelector('#cashFlowTable').innerHTML;
+        const breakevenHTML = document.getElementById('breakevenCard').innerHTML;
+        const scenarioHTML = document.getElementById('scenarioContainer').innerHTML;
+        const sensitivityHTML = document.getElementById('sensitivityResults').innerHTML || '';
+
+        let chartsHTML = '';
+        if (chartImages.some(img => img)) {
+            chartsHTML = '<div style="text-align:center;"><h2 style="color:#b8860b;">Grafikler</h2>';
+            chartImages.forEach((img, idx) => { if (img) chartsHTML += `<img src="${img}" style="max-width:100%; margin-bottom:20px; border:1px solid #b8860b; border-radius:8px;" /><br>`; });
+            chartsHTML += '</div>';
+        }
+
+        const now = new Date(); const dateStr = now.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        const reportHTML = `
+            <!DOCTYPE html>
+            <html dir="ltr">
+            <head><meta charset="UTF-8"><title>Finansal Fizibilite Raporu - FAROUK GRUP</title>
+            <style>
+                body { font-family: 'Tajawal', sans-serif; margin: 2rem; }
+                .header { text-align: center; border-bottom: 3px solid #b8860b; padding-bottom: 1rem; margin-bottom: 2rem; }
+                .header h1 { color: #b8860b; margin: 0; } .header p { color: #555; }
+                h2 { color: #b8860b; border-bottom: 2px solid #b8860b33; padding-bottom: 0.3rem; margin-top: 1.5rem; }
+                table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+                th { background: rgba(184,134,11,0.1); padding: 0.5rem; border: 1px solid #b8860b; }
+                td { padding: 0.5rem; border: 1px solid #ddd; text-align: center; }
+                .positive { color: green; } .negative { color: red; }
+                .result-card { background: #f9f9f9; border: 1px solid #b8860b; border-radius: 10px; padding: 1rem; margin: 1rem 0; }
+                .status-good { background: #28a745; color: white; padding: 0.2rem 0.5rem; border-radius: 20px; display: inline-block; }
+                .status-bad { background: #dc3545; color: white; padding: 0.2rem 0.5rem; border-radius: 20px; display: inline-block; }
+                .status-warning { background: #ffc107; color: #111; padding: 0.2rem 0.5rem; border-radius: 20px; display: inline-block; }
+                .scenario-card { border: 2px solid; border-radius: 10px; padding: 1rem; margin: 0.5rem; display: inline-block; width: 30%; }
+                .footer { text-align: center; margin-top: 3rem; color: #888; border-top: 1px dashed #b8860b; padding-top: 1rem; }
+            </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>Farouk Grup Danışmanlık ve İşletme</h1>
+                    <p>Kapsamlı Finansal Fizibilite Raporu</p>
+                    <p>Kurum: ${companyName} | Tarih: ${dateStr}</p>
+                    <p>Para Birimi: ${currency}</p>
+                </div>
+                <h2>Temel Performans Göstergeleri</h2>
+                <table>${kpiTableRows}</table>
+                <h2>Proje Değerlendirmesi</h2><div class="result-card">${projectScoreHTML}</div>
+                ${chartsHTML}
+                <h2>Beklenen Nakit Akışları</h2>${tableHTML}
+                <h2>Başabaş Noktası</h2><div class="result-card">${breakevenHTML}</div>
+                <h2>Senaryo Analizi</h2><div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">${scenarioHTML}</div>
+                ${sensitivityHTML ? '<h2>Duyarlılık Analizi</h2>' + sensitivityHTML : ''}
+                <div class="footer">Bu rapor Farouk Grup Danışmanlık ve İşletme tarafından oluşturulmuştur - Tüm Hakları Saklıdır © ${now.getFullYear()}</div>
+            </body>
+            </html>
+        `;
+        const blob = new Blob(['\uFEFF' + reportHTML], { type: 'application/msword' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `Fizibilite_Raporu_${companyName}_${now.toISOString().slice(0,10)}.doc`;
+        link.click();
+    } catch (error) { alert('Rapor oluşturulurken hata'); }
+}
+
+function calculateIRR(cashFlows, guess = 0.1, maxIter = 10000, tol = 1e-8) {
+    let hasPositive = false, hasNegative = false;
+    for (let i = 0; i < cashFlows.length; i++) { if (cashFlows[i] > 0) hasPositive = true; if (cashFlows[i] < 0) hasNegative = true; }
+    if (!hasPositive || !hasNegative) return NaN;
+    let low = -0.99; let high = 1e6; let fLow = 0, fHigh = 0;
+    for (let i = 0; i < cashFlows.length; i++) { fLow += cashFlows[i] / Math.pow(1 + low, i); fHigh += cashFlows[i] / Math.pow(1 + high, i); }
+    if (fLow * fHigh > 0) {
+        let step = 1;
+        while (fLow * fHigh > 0 && high < 1e12) { high *= 2; fHigh = 0; for (let i = 0; i < cashFlows.length; i++) fHigh += cashFlows[i] / Math.pow(1 + high, i); }
+        if (fLow * fHigh > 0) return NaN;
+    }
+    for (let iter = 0; iter < maxIter; iter++) {
+        let mid = (low + high) / 2; let fMid = 0;
+        for (let i = 0; i < cashFlows.length; i++) fMid += cashFlows[i] / Math.pow(1 + mid, i);
+        if (Math.abs(fMid) < tol) return mid;
+        if (fMid > 0) low = mid; else high = mid;
+    }
+    return (low + high) / 2;
+}
+
+function calculateMIRR(cashFlows, financeRate, reinvestRate) {
+    let n = cashFlows.length - 1; let pvNeg = 0; let fvPos = 0;
+    for (let i = 0; i <= n; i++) {
+        if (cashFlows[i] < 0) pvNeg += cashFlows[i] / Math.pow(1 + financeRate, i);
+        else if (cashFlows[i] > 0) fvPos += cashFlows[i] * Math.pow(1 + reinvestRate, n - i);
+    }
+    if (pvNeg === 0) return NaN;
+    return Math.pow(-fvPos / pvNeg, 1 / n) - 1;
+}
+
+function safeEvaluate(expression) {
+    let expr = expression.replace(/\s+/g, '').replace(/×/g, '*').replace(/÷/g, '/');
+    if (!/^[0-9+\-*/().]+$/.test(expr)) throw new Error('Geçersiz ifade');
+    return new Function('return ' + expr)();
+}
+
+function computeProjectFromInputs(inputs) {
+    const fixedCap = inputs.fixedCapital, setupCap = inputs.setupCapital, monthlySales = inputs.monthlySales, employees = inputs.employees, netSalary = inputs.netSalary, salaryBurden = inputs.salaryBurden, netRent = inputs.netRent, rentTax = inputs.rentTax, totalVariableCostPercent = inputs.totalVariableCostPercent, opexMonthly = inputs.opexMonthly, cashReserve = inputs.cashReserve, growth = inputs.growth, expGrowth = inputs.expGrowth, discount = inputs.discount, taxRate = inputs.taxRate, lifeYears = inputs.lifeYears, reinvestRate = inputs.reinvestRate, wcMonths = inputs.wcMonths, pricePerUnit = inputs.pricePerUnit;
+    const salariesMonthly = employees * netSalary * salaryBurden;
+    const rentMonthly = netRent * (1 + rentTax);
+    const fixedMonthly = salariesMonthly + rentMonthly + opexMonthly;
+    const totalFixedMonthly = fixedMonthly + cashReserve;
+    const workingCapitalRequired = totalFixedMonthly * wcMonths;
+    const totalInvestment = fixedCap + setupCap + workingCapitalRequired;
+    const revenue1 = monthlySales * 12;
+    const fixedExpenses1 = (salariesMonthly + rentMonthly + opexMonthly) * 12;
+    const depreciation = fixedCap / lifeYears;
+    const years = lifeYears;
+    let revenues = [], fixedExpenses = [], variableExpenses = [], ebit = [], tax = [], nopat = [], fcf = [];
+    let cashFlows = [-totalInvestment];
+    for (let i = 1; i <= years; i++) {
+        let rev = revenue1 * Math.pow(1 + growth, i - 1);
+        let fixedExp = fixedExpenses1 * Math.pow(1 + expGrowth, i - 1);
+        let varExp = rev * totalVariableCostPercent;
+        let ebit_ = rev - fixedExp - varExp - depreciation;
+        let tax_ = ebit_ > 0 ? ebit_ * taxRate : 0;
+        let nopat_ = ebit_ - tax_;
+        let fcf_ = nopat_ + depreciation;
+        revenues.push(rev); fixedExpenses.push(fixedExp); variableExpenses.push(varExp); ebit.push(ebit_); tax.push(tax_); nopat.push(nopat_); fcf.push(fcf_);
+        cashFlows.push(fcf_);
+    }
+    let npv = -totalInvestment;
+    for (let i = 1; i <= years; i++) npv += fcf[i-1] / Math.pow(1 + discount, i);
+    const irrValue = calculateIRR(cashFlows);
+    const mirrValue = calculateMIRR(cashFlows, discount, reinvestRate);
+    let cum = 0, paybackYear = null, paybackFraction = 0;
+    for (let i = 0; i < cashFlows.length; i++) {
+        cum += cashFlows[i];
+        if (cum >= 0 && paybackYear === null) { paybackYear = i; let prevCum = cum - cashFlows[i]; paybackFraction = -prevCum / cashFlows[i]; break; }
+    }
+    const payback = paybackYear !== null ? paybackYear - 1 + paybackFraction : null;
+    let discountedCum = 0, dpbpYear = null, dpbpFraction = 0;
+    for (let i = 0; i < cashFlows.length; i++) {
+        let dcf = cashFlows[i] / Math.pow(1 + discount, i);
+        discountedCum += dcf;
+        if (discountedCum >= 0 && dpbpYear === null) { dpbpYear = i; let prevCum = discountedCum - dcf; dpbpFraction = -prevCum / dcf; break; }
+    }
+    const dpbp = dpbpYear !== null ? dpbpYear - 1 + dpbpFraction : null;
+    const pvFuture = cashFlows.slice(1).reduce((acc, val, idx) => acc + val / Math.pow(1 + discount, idx + 1), 0);
+    const pi = pvFuture / Math.abs(cashFlows[0]);
+    const avgNetProfit = nopat.reduce((a,b) => a + b, 0) / years;
+    const roi = avgNetProfit / totalInvestment;
+    const operatingMargin = revenues[0] ? (ebit[0] / revenues[0]) * 100 : 0;
+    const debtService = inputs.debtService || 0;
+    const ebitda1 = ebit[0] + depreciation;
+    const dscr = debtService > 0 ? ebitda1 / debtService : 0;
+    const totalFixedAnnual = fixedExpenses1;
+    const contributionMarginRatio = 1 - totalVariableCostPercent;
+    const beRevenueActual = totalFixedAnnual / contributionMarginRatio;
+    const beUnitsActual = beRevenueActual / pricePerUnit;
+    const ebitda = ebit[0] + depreciation;
+    const netIncome = nopat[0];
+    const netProfitMargin = revenues[0] ? (netIncome / revenues[0]) * 100 : 0;
+    return { npv, irr: irrValue, mirr: mirrValue, payback, dpbp, pi, roi, operatingMargin, dscr, workingCapitalRequired, totalInvestment, beRevenueActual, beUnitsActual, totalFixedMonthly, contributionMarginRatio, revenues, fixedExpenses, variableExpenses, ebit, tax, nopat, fcf, years, depreciation, cashFlows, ebitda, netIncome, netProfitMargin };
+}
+
+function evaluateProject(res, inputs) {
+    let score = 0; const details = [];
+    if (res.npv > 0) { score += 20; details.push("✅ NPV pozitif"); } else details.push("❌ NPV negatif");
+    if (!isNaN(res.irr) && res.irr > inputs.discount) { score += 20; details.push("✅ IRR > iskonto oranı"); } else details.push("❌ IRR ≤ iskonto oranı");
+    if (res.pi >= 1) { score += 20; details.push("✅ PI ≥ 1"); } else details.push("❌ PI < 1");
+    const halfLife = inputs.lifeYears / 2;
+    if (res.payback !== null && res.payback < halfLife) { score += 20; details.push(`✅ Geri ödeme süresi (${res.payback.toFixed(1)} yıl) < yarı ömür (${halfLife} yıl)`); } else if (res.payback !== null) details.push(`❌ Geri ödeme süresi (${res.payback.toFixed(1)} yıl) ≥ yarı ömür (${halfLife} yıl)`); else details.push("❌ Proje ömrü içinde geri ödeme yok");
+    if (inputs.debtService > 0) { if (res.dscr > 1.3) { score += 20; details.push(`✅ DSCR (${res.dscr.toFixed(2)}) > 1.3`); } else details.push(`❌ DSCR (${res.dscr.toFixed(2)}) ≤ 1.3`); } else { score += 20; details.push("✅ Borç yok (varsayılan 20 puan)"); }
+    let grade = "", gradeClass = "", icon = "";
+    if (score >= 80) { grade = "Mükemmel"; gradeClass = "status-good"; icon = "🟢"; }
+    else if (score >= 50) { grade = "Kabul Edilebilir"; gradeClass = "status-warning"; icon = "🟡"; }
+    else { grade = "Yüksek Risk"; gradeClass = "status-bad"; icon = "🔴"; }
+    return { score, grade, gradeClass, icon, details };
+}
+
+let charts = {};
+function renderCharts(res, inputs, currency) {
+    for (let key in charts) if (charts[key]) charts[key].destroy();
+    const ctx1 = document.getElementById('cashFlowChart').getContext('2d');
+    charts.cashFlow = new Chart(ctx1, { type: 'bar', data: { labels: Array.from({ length: res.years }, (_, i) => `Yıl ${i+1}`), datasets: [{ label: 'Serbest Nakit Akışı', data: res.fcf, backgroundColor: 'rgba(184,134,11,0.7)', borderColor: '#b8860b', borderWidth: 1 }] }, options: { responsive: true, plugins: { legend: { display: false } } } });
+    const discountRates = [5,7,10,12,15,18,20];
+    const npvValues = discountRates.map(r => { let d = r/100; let npv = -res.totalInvestment; for (let i=1; i<=res.years; i++) npv += res.fcf[i-1] / Math.pow(1+d,i); return npv; });
+    const ctx2 = document.getElementById('npvCurveChart').getContext('2d');
+    charts.npvCurve = new Chart(ctx2, { type: 'line', data: { labels: discountRates.map(r => r+'%'), datasets: [{ label: 'Net Bugünkü Değer (NPV)', data: npvValues, borderColor: '#b8860b', backgroundColor: 'rgba(184,134,11,0.1)', fill: true }] } });
+    const ctx3 = document.getElementById('revExpChart').getContext('2d');
+    charts.revExp = new Chart(ctx3, { type: 'line', data: { labels: Array.from({ length: res.years }, (_, i) => `Yıl ${i+1}`), datasets: [{ label: 'Gelir', data: res.revenues, borderColor: '#28a745' }, { label: 'Toplam Giderler', data: res.fixedExpenses.map((f,i) => f + res.variableExpenses[i]), borderColor: '#dc3545' }] } });
+    const beUnits = res.beUnitsActual; const units = [0, beUnits, beUnits*1.5]; const revenueData = units.map(u => u * inputs.pricePerUnit); const fixedCostData = units.map(() => res.fixedExpenses[0]); const totalCostData = units.map(u => res.fixedExpenses[0] + u * inputs.pricePerUnit * res.totalVariableCostPercent);
+    const ctx4 = document.getElementById('breakevenChart').getContext('2d');
+    charts.breakeven = new Chart(ctx4, { type: 'line', data: { labels: units.map(u => u.toFixed(0)+' birim'), datasets: [{ label: 'Gelir', data: revenueData, borderColor: '#28a745' }, { label: 'Toplam Maliyet', data: totalCostData, borderColor: '#dc3545' }, { label: 'Sabit Maliyet', data: fixedCostData, borderColor: '#b8860b', borderDash: [5,5] }] } });
+}
+
+function renderScenarios(res, inputs, currency) {
+    const pessimisticInputs = { ...inputs }; pessimisticInputs.monthlySales *= 0.8; pessimisticInputs.totalVariableCostPercent = Math.min(inputs.totalVariableCostPercent*1.1,1); pessimisticInputs.growth *= 0.5; const pesRes = computeProjectFromInputs(pessimisticInputs);
+    const optimisticInputs = { ...inputs }; optimisticInputs.monthlySales *= 1.2; optimisticInputs.totalVariableCostPercent = Math.max(inputs.totalVariableCostPercent*0.9,0); optimisticInputs.growth *= 1.5; const optRes = computeProjectFromInputs(optimisticInputs);
+    document.getElementById('scenarioContainer').innerHTML = `
+        <div class="scenario-card pessimistic"><h4>🔴 Kötümser</h4><div class="value">${currency}${pesRes.npv.toFixed(0)}</div><div class="label">NPV</div><div class="value">${!isNaN(pesRes.irr)?(pesRes.irr*100).toFixed(2)+'%':'Belirsiz'}</div></div>
+        <div class="scenario-card expected"><h4>🟡 Beklenen</h4><div class="value">${currency}${res.npv.toFixed(0)}</div><div class="label">NPV</div><div class="value">${!isNaN(res.irr)?(res.irr*100).toFixed(2)+'%':'Belirsiz'}</div></div>
+        <div class="scenario-card optimistic"><h4>🟢 İyimser</h4><div class="value">${currency}${optRes.npv.toFixed(0)}</div><div class="label">NPV</div><div class="value">${!isNaN(optRes.irr)?(optRes.irr*100).toFixed(2)+'%':'Belirsiz'}</div></div>
+    `;
+}
+
+document.getElementById('calculateBtn').addEventListener('click', function() {
+    const currency = document.getElementById('currencySelect').value;
+    const inputs = {
+        fixedCapital: parseFloat(document.getElementById('fixedCapital').value)||0, setupCapital: parseFloat(document.getElementById('setupCapital').value)||0, monthlySales: parseFloat(document.getElementById('monthlySales').value)||0, employees: parseFloat(document.getElementById('employees').value)||0, netSalary: parseFloat(document.getElementById('netSalary').value)||0, salaryBurden: parseFloat(document.getElementById('salaryBurden').value)||1, netRent: parseFloat(document.getElementById('netRent').value)||0, rentTax: parseFloat(document.getElementById('rentTax').value)/100||0, totalVariableCostPercent: parseFloat(document.getElementById('totalVariableCostPercent').value)||0, opexMonthly: parseFloat(document.getElementById('opexMonthly').value)||0, cashReserve: parseFloat(document.getElementById('cashReserve').value)||0, wcMonths: parseFloat(document.getElementById('wcMonths').value)||3, growth: parseFloat(document.getElementById('growthRate').value)/100||0, expGrowth: parseFloat(document.getElementById('expGrowth').value)/100||0, discount: parseFloat(document.getElementById('discountRate').value)/100||0.15, taxRate: parseFloat(document.getElementById('taxRate').value)/100||0.25, lifeYears: parseInt(document.getElementById('lifeYears').value)||8, reinvestRate: parseFloat(document.getElementById('reinvestRate').value)/100||0.10, debtService: parseFloat(document.getElementById('debtService').value)||0, pricePerUnit: parseFloat(document.getElementById('pricePerUnit').value)||0
+    };
+    const res = computeProjectFromInputs(inputs);
+    window.lastResult = res; window.lastInputs = inputs;
+    document.getElementById('initialMessage').style.display = 'none';
+    document.getElementById('resultsSection').style.display = 'block';
+
+    document.getElementById('kpiCards').innerHTML = `
+        <div class="result-card"><i class="fas fa-coins"></i><h4>Net Bugünkü Değer (NPV)</h4><div class="value">${currency}${res.npv.toFixed(0)}</div><div class="status ${res.npv>0?'status-good':'status-bad'}">${res.npv>0?'Kabul Edilebilir':'Kabul Edilemez'}</div></div>
+        <div class="result-card"><i class="fas fa-percent"></i><h4>İç Verim Oranı (IRR)</h4><div class="value">${!isNaN(res.irr)?(res.irr*100).toFixed(2):'Belirsiz'}%</div><div class="status ${res.irr>inputs.discount?'status-good':'status-bad'}">${!isNaN(res.irr)?(res.irr>inputs.discount?'> İskonto oranı':'< İskonto oranı'):''}</div></div>
+        <div class="result-card"><i class="fas fa-chart-pie"></i><h4>Kârlılık Endeksi (PI)</h4><div class="value">${res.pi.toFixed(2)}</div><div class="unit">${res.pi>=1?'Kârlı':'Kârsız'}</div></div>
+        <div class="result-card"><i class="fas fa-clock"></i><h4>Geri Ödeme Süresi</h4><div class="value">${res.payback!==null?res.payback.toFixed(1):'∞'}</div><div class="unit">yıl</div></div>
+        <div class="result-card"><i class="fas fa-hourglass-half"></i><h4>İskontolu Geri Ödeme</h4><div class="value">${res.dpbp!==null?res.dpbp.toFixed(1):'∞'}</div><div class="unit">yıl</div></div>
+        <div class="result-card"><i class="fas fa-percent"></i><h4>Yatırım Getirisi (ROI)</h4><div class="value">${(res.roi*100).toFixed(2)}%</div><div class="unit">yıllık ortalama</div></div>
+        <div class="result-card"><i class="fas fa-hand-holding-usd"></i><h4>İşletme Sermayesi</h4><div class="value">${currency}${res.workingCapitalRequired.toFixed(0)}</div></div>
+        <div class="result-card"><i class="fas fa-percent"></i><h4>Faaliyet Marjı</h4><div class="value">${res.operatingMargin.toFixed(2)}%</div></div>
+        <div class="result-card"><i class="fas fa-percent"></i><h4>MIRR</h4><div class="value">${!isNaN(res.mirr)?(res.mirr*100).toFixed(2):'Belirsiz'}%</div></div>
+        <div class="result-card"><i class="fas fa-shield-alt"></i><h4>DSCR</h4><div class="value">${res.dscr.toFixed(2)}</div></div>
+        <div class="result-card"><i class="fas fa-chart-line"></i><h4>EBITDA (1. yıl)</h4><div class="value">${currency}${res.ebitda.toFixed(0)}</div></div>
+        <div class="result-card"><i class="fas fa-file-invoice-dollar"></i><h4>Net Kâr (1. yıl)</h4><div class="value">${currency}${res.netIncome.toFixed(0)}</div></div>
+        <div class="result-card"><i class="fas fa-percent"></i><h4>Net Kâr Marjı</h4><div class="value">${res.netProfitMargin.toFixed(2)}%</div></div>
+    `;
+
+    const evaluation = evaluateProject(res, inputs);
+    let detailsHtml = evaluation.details.map(d => `<div style="font-size:0.85rem; margin:0.1rem 0;">${d}</div>`).join('');
+    document.getElementById('projectScore').innerHTML = `
+        <h3><i class="fas fa-star" style="color:var(--accent-soft);"></i> Proje Değerlendirmesi</h3>
+        <div style="font-size:2rem; font-weight:900; color:var(--accent-soft);">${evaluation.score} / 100</div>
+        <div class="status ${evaluation.gradeClass}" style="font-size:1.1rem; margin:0.5rem 0;">${evaluation.icon} ${evaluation.grade}</div>
+        <div style="margin-top:0.8rem; border-top:1px solid var(--border-light); padding-top:0.5rem;">${detailsHtml}</div>
+    `;
+
+    let tableHtml = '<thead><tr><th>Yıl</th><th>Gelir</th><th>Sabit Giderler</th><th>Değişken Giderler</th><th>Amortisman</th><th>EBIT</th><th>Vergi</th><th>Net Kâr</th><th>Nakit Akışı</th></tr></thead><tbody>';
+    for (let i=0; i<res.years; i++) {
+        tableHtml += `<tr><td>${i+1}</td><td>${currency}${res.revenues[i].toFixed(0)}</td><td>${currency}${res.fixedExpenses[i].toFixed(0)}</td><td>${currency}${res.variableExpenses[i].toFixed(0)}</td><td>${currency}${res.depreciation.toFixed(0)}</td><td class="${res.ebit[i]<0?'negative':'positive'}">${currency}${res.ebit[i].toFixed(0)}</td><td>${currency}${res.tax[i].toFixed(0)}</td><td class="${res.nopat[i]<0?'negative':'positive'}">${currency}${res.nopat[i].toFixed(0)}</td><td class="${res.fcf[i]<0?'negative':'positive'}">${currency}${res.fcf[i].toFixed(0)}</td></tr>`;
+    }
+    tableHtml += '</tbody>';
+    document.getElementById('cashFlowTable').innerHTML = tableHtml;
+
+    const riskDataText = `
+        <strong>İlk Yatırım:</strong> ${currency} ${res.totalInvestment.toFixed(0)}<br>
+        <strong>Yıllık Gelir (1. yıl):</strong> ${currency} ${res.revenues[0].toFixed(0)}<br>
+        <strong>Sabit Giderler (1. yıl):</strong> ${currency} ${res.fixedExpenses[0].toFixed(0)}<br>
+        <strong>Değişken Giderler (1. yıl):</strong> ${currency} ${res.variableExpenses[0].toFixed(0)}<br>
+        <strong>Yıllık Amortisman:</strong> ${currency} ${res.depreciation.toFixed(0)}<br>
+        <strong>Gelir Büyümesi:</strong> ${(inputs.growth*100).toFixed(1)}%<br>
+        <strong>Gider Büyümesi:</strong> ${(inputs.expGrowth*100).toFixed(1)}%<br>
+        <strong>İskonto Oranı:</strong> ${(inputs.discount*100).toFixed(1)}%<br>
+        <strong>Vergi Oranı:</strong> ${(inputs.taxRate*100).toFixed(0)}%
+    `;
+    document.getElementById('riskDataText').innerHTML = riskDataText;
+
+    document.getElementById('breakevenCard').innerHTML = `
+        <div><i class="fas fa-calendar-alt" style="color:var(--accent-soft);"></i> <strong>Yıllık Başabaş Geliri:</strong> ${currency}${res.beRevenueActual.toFixed(0)}</div>
+        <div><i class="fas fa-boxes" style="color:var(--accent-soft);"></i> <strong>Yıllık Birim Sayısı:</strong> ${res.beUnitsActual.toFixed(0)} birim</div>
+        <div><span style="font-size:0.8rem; color:var(--text-muted);">(Aylık sabit giderler: ${currency}${res.totalFixedMonthly.toFixed(0)}, katkı payı oranı ${(res.contributionMarginRatio*100).toFixed(0)}%)</span></div>
+    `;
+
+    renderCharts(res, inputs, currency);
+    renderScenarios(res, inputs, currency);
+});
+
+document.getElementById('runSensitivity').addEventListener('click', function() {
+    const inputs = {
+        fixedCapital: parseFloat(document.getElementById('fixedCapital').value)||0, setupCapital: parseFloat(document.getElementById('setupCapital').value)||0, monthlySales: parseFloat(document.getElementById('monthlySales').value)||0, employees: parseFloat(document.getElementById('employees').value)||0, netSalary: parseFloat(document.getElementById('netSalary').value)||0, salaryBurden: parseFloat(document.getElementById('salaryBurden').value)||1, netRent: parseFloat(document.getElementById('netRent').value)||0, rentTax: parseFloat(document.getElementById('rentTax').value)/100||0, totalVariableCostPercent: parseFloat(document.getElementById('totalVariableCostPercent').value)||0, opexMonthly: parseFloat(document.getElementById('opexMonthly').value)||0, cashReserve: parseFloat(document.getElementById('cashReserve').value)||0, wcMonths: parseFloat(document.getElementById('wcMonths').value)||3, growth: parseFloat(document.getElementById('growthRate').value)/100||0, expGrowth: parseFloat(document.getElementById('expGrowth').value)/100||0, discount: parseFloat(document.getElementById('discountRate').value)/100||0.15, taxRate: parseFloat(document.getElementById('taxRate').value)/100||0.25, lifeYears: parseInt(document.getElementById('lifeYears').value)||8, reinvestRate: parseFloat(document.getElementById('reinvestRate').value)/100||0.10, debtService: parseFloat(document.getElementById('debtService').value)||0, pricePerUnit: parseFloat(document.getElementById('pricePerUnit').value)||0
+    };
+    const sensitivityVar = document.getElementById('sensitivityVar').value;
+    const rangePercent = parseFloat(document.getElementById('sensitivityRange').value) / 100;
+    const multipliers = [-rangePercent, -rangePercent/2, 0, rangePercent/2, rangePercent];
+    const labels = [], npvResults = [], irrResults = [];
+    for (let m of multipliers) {
+        let modified = { ...inputs };
+        if (sensitivityVar === 'monthlySales') modified.monthlySales = inputs.monthlySales * (1 + m);
+        else if (sensitivityVar === 'fixedCosts') { modified.netSalary *= (1+m); modified.netRent *= (1+m); modified.opexMonthly *= (1+m); }
+        else if (sensitivityVar === 'totalVariableCostPercent') modified.totalVariableCostPercent = Math.min(1, Math.max(0, inputs.totalVariableCostPercent * (1 + m)));
+        else if (sensitivityVar === 'discountRate') modified.discount = inputs.discount * (1 + m);
+        else if (sensitivityVar === 'growthRate') modified.growth = inputs.growth * (1 + m);
+        const res = computeProjectFromInputs(modified);
+        npvResults.push(res.npv); irrResults.push(res.irr * 100); labels.push((m*100).toFixed(0) + '%');
+    }
+    let tableHtml = '<thead><tr><th>Değişim</th><th>NPV</th><th>IRR (%)</th></tr></thead><tbody>';
+    for (let i=0; i<labels.length; i++) {
+        tableHtml += `<tr><td>${labels[i]}</td><td class="${npvResults[i]>0?'positive':'negative'}">${document.getElementById('currencySelect').value}${npvResults[i].toFixed(0)}</td><td>${irrResults[i].toFixed(2)}%</td></tr>`;
+    }
+    tableHtml += '</tbody>';
+    document.getElementById('sensitivityResults').innerHTML = tableHtml;
+});
+
+document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+document.getElementById('exportWordBtn').addEventListener('click', exportToWord);
+
+// ------------------ Hesap Makinesi ------------------
+const calcDisplay = document.getElementById('calcDisplay');
+let currentCalcInput = '';
+window.handleCalculatorInput = function(v) { currentCalcInput += v; calcDisplay.value = currentCalcInput; };
+window.clearCalculator = function() { currentCalcInput = ''; calcDisplay.value = ''; };
+window.backspaceCalculator = function() { currentCalcInput = currentCalcInput.slice(0, -1); calcDisplay.value = currentCalcInput; };
+window.calculateCalculatorResult = function() {
+    try { let r = safeEvaluate(currentCalcInput); calcDisplay.value = r; currentCalcInput = r.toString(); }
+    catch { calcDisplay.value = 'Hata'; currentCalcInput = ''; }
+};
+function handleKeyboard(e) {
+    if (modal.style.display !== 'block') return;
+    const key = e.key;
+    e.preventDefault(); e.stopPropagation();
+    if (key >= '0' && key <= '9') handleCalculatorInput(key);
+    else if (key === '.') handleCalculatorInput('.');
+    else if (key === '+' || key === '-' || key === '*' || key === '/') handleCalculatorInput(key);
+    else if (key === 'Enter' || key === '=') calculateCalculatorResult();
+    else if (key === 'Backspace') backspaceCalculator();
+    else if (key === 'Escape') modal.style.display = 'none';
+    else if (key === 'c' || key === 'C') clearCalculator();
+}
+document.addEventListener('keydown', handleKeyboard);
+const modal = document.getElementById('calculatorModal');
+const btn = document.getElementById('calculatorBtn');
+const span = document.getElementsByClassName('close')[0];
+btn.onclick = function(e) { e.preventDefault(); modal.style.display = 'block'; };
+span.onclick = function() { modal.style.display = 'none'; };
+window.onclick = function(event) { if (event.target == modal) modal.style.display = 'none'; };
+</script>
+<!-- Ana Sayfaya Dönüş Butonu (sağ altta) -->
+<a href="index.html" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(180,133,84,0.9);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: bold;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+" onmouseover="this.style.backgroundColor='#b48554'; this.style.transform='scale(1.05)';" onmouseout="this.style.backgroundColor='rgba(180,133,84,0.9)'; this.style.transform='scale(1)';">
+    <i class="fas fa-home"></i> Ana Sayfa
+</a>
+</body>
+</html>
